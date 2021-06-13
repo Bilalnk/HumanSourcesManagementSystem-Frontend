@@ -1,24 +1,45 @@
-import logo from './logo.svg';
-import './App.css';
+import { createMuiTheme, ThemeProvider } from "@material-ui/core";
+import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
+import Dashboard from "./layout/Dashboard";
+
+import JobAdvertisementPage from "./pages/JobAdvertisementPage";
+import AddJobAdvertisementPage from "./pages/AddJobAdvertisementPage";
+
+const theme = createMuiTheme({
+  pallette: {
+    primary: {
+      main: "#c1c1c1",
+    },
+    secondary: "#ffaa",
+  },
+  typography: {
+    fontFamily: "Quicksand",
+    fontWeightLight: "400",
+    fontWeightRegular: " 500",
+    fontWeightMedium: "600",
+    fontWeightBold: "700",
+  },
+});
 
 function App() {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <ThemeProvider theme={theme}>
+      <Router>
+        <Dashboard>
+          <Switch>
+            
+            <Route exact path="/">
+              <JobAdvertisementPage />
+            </Route>
+
+            <Route path="/addadvertisement">
+              <AddJobAdvertisementPage />
+            </Route>
+
+          </Switch>
+        </Dashboard>
+      </Router>
+    </ThemeProvider>
   );
 }
 
