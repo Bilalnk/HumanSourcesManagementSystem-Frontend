@@ -16,6 +16,7 @@ import 'date-fns';
 import Button from "@material-ui/core/Button";
 import KeyboardArrowRightIcon from "@material-ui/icons/KeyboardArrowRight";
 import TextField from "@material-ui/core/TextField";
+import { format } from "date-fns";
 
 
 const useStyles = makeStyles((theme) => ({
@@ -72,8 +73,10 @@ function AddJobAdvertisementPage() {
 
         const [openPositionCount, setOpenPositionCount] = useState("")
 
-        const [selectedDate, setSelectedDate] = useState(new Date('2014-08-18T21:11:54'));
+        const [selectedDate, setSelectedDate] = useState(new Date('2021-06-15'));
 
+        
+        
 
         useEffect(() => {
                 let cityService = new CityService();
@@ -97,11 +100,11 @@ function AddJobAdvertisementPage() {
 
 
         const handleDateChange = (date) => {
+                var resultDate = format(selectedDate, 'yyyy-MM-dd')
                 setSelectedDate(date);
-                console.log(date)
-                console.log(selectedDate)
+                console.log(resultDate)
         };
-
+ 
 
         const handleSubmit = (e) => {
                 // e.preventDefault()

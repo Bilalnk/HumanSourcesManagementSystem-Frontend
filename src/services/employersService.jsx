@@ -15,4 +15,8 @@ export default class EmployersService {
         add(employer){
                 return axios.post(requestPath + "/add", employer)
         }
+
+        getById(id){
+                return axios.get(requestPath + "/get?id=" + id)
+        }
 }

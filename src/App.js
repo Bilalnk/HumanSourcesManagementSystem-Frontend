@@ -4,6 +4,10 @@ import Dashboard from "./layout/Dashboard";
 
 import JobAdvertisementPage from "./pages/JobAdvertisementPage";
 import AddJobAdvertisementPage from "./pages/AddJobAdvertisementPage";
+import JobAdvertisementDetails from "./pages/JobAdvertisementDetails";
+
+import 'semantic-ui-css/semantic.min.css'
+import EmployersPage from "./pages/EmployersPage";
 
 const theme = createMuiTheme({
   pallette: {
@@ -25,9 +29,9 @@ function App() {
   return (
     <ThemeProvider theme={theme}>
       <Router>
-        <Dashboard>
-          <Switch>
-            
+        <Switch>
+          <Dashboard>
+
             <Route exact path="/">
               <JobAdvertisementPage />
             </Route>
@@ -36,10 +40,30 @@ function App() {
               <AddJobAdvertisementPage />
             </Route>
 
-          </Switch>
-        </Dashboard>
+            <Route path="/jobDetail/:JobAdvertisementId">
+              <JobAdvertisementDetails />
+            </Route>
+
+            <Route path="/employer/:employerId">
+              <EmployersPage/>
+            </Route>
+          </Dashboard>
+        </Switch>
       </Router>
     </ThemeProvider>
+
+// <ThemeProvider theme={theme}>
+//       <Router>
+//         <Switch>
+
+//           <Route path="/error">
+//             <ErrorPage />
+//           </Route>
+
+//         </Switch>
+//       </Router>
+//     </ThemeProvider> 
+
   );
 }
 

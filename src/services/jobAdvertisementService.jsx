@@ -30,6 +30,9 @@ export default class JobAdvertisementService {
                 return axios.get(requestPath + "/getjobadvertisementdetails")
         }
 
+        getJobAdveritsementById(id){
+                return axios.get(requestPath + "/getjobadvertisementbyid?id=" + id)
+        }
         
         updateAdvertisementActive(active, id){
                 return axios.get(requestPath + "/updateAdvertisementActive?active=" + active + "&id="+ id)

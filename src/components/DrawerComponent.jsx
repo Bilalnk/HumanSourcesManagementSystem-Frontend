@@ -1,17 +1,21 @@
 import React from "react";
-import { Drawer, makeStyles, Typography, Divider, List, ListItem, ListItemText, ListItemIcon } from "@material-ui/core";
+import { Drawer, makeStyles, useTheme, Typography, Divider, List, ListItem, ListItemText, ListItemIcon } from "@material-ui/core";
 import PlaylistAddCheckIcon from '@material-ui/icons/PlaylistAddCheck';
 import AddIcon from '@material-ui/icons/Add';
 import { useHistory, useLocation } from 'react-router-dom'
 
-const drawerWidth = 240
+import ChevronLeftIcon from '@material-ui/icons/ChevronLeft';
+import ChevronRightIcon from '@material-ui/icons/ChevronRight';
+import IconButton from '@material-ui/core/IconButton';
 
-const useStyles = makeStyles(() => {
+const drawerWidth = 360
+
+const useStyles = makeStyles((theme) => {
         return {
                 drawer: {
                         width: drawerWidth
                 },
-                drawerPaper:{
+                drawerPaper: {
                         width: drawerWidth
                 },
                 menuTitle: {
@@ -24,7 +28,7 @@ const useStyles = makeStyles(() => {
                         color: '#ffffff',
                         '&:hover': {
                                 color: '#5959ff'
-                        } 
+                        }
                 }
         }
 })
@@ -36,16 +40,29 @@ function DrawerComponent() {
         const history = useHistory()
         const location = useLocation()
 
+        const theme = useTheme();
+
+
+        const [open, setOpen] = React.useState(false);
+
+        const handleDrawerOpen = () => {
+                setOpen(true);
+        };
+
+        const handleDrawerClose = () => {
+                setOpen(false);
+        };
+
         const menuItems = [
                 {
-                        text:'Job Advertisement',
-                        icon: <PlaylistAddCheckIcon/>,
-                        path:'/'
+                        text: 'Job Advertisement',
+                        icon: <PlaylistAddCheckIcon />,
+                        path: '/'
                 },
                 {
-                        text:'Add a Job Advertisement',
-                        icon: <AddIcon/>,
-                        path:'/addadvertisement'
+                        text: 'Add a Job Advertisement',
+                        icon: <AddIcon />,
+                        path: '/addadvertisement'
                 }
         ]
 
@@ -54,30 +71,37 @@ function DrawerComponent() {
                         className={classes.drawer}
                         variant='permanent'
                         anchor="left"
-                        classes={{ paper: classes.drawerPaper}}
+                        classes={{ paper: classes.drawerPaper }}
                 >
-                        <div  className={classes.menuTitle}>
+
+                        <div className={classes.drawerHeader}>
+                                <IconButton onClick={handleDrawerClose}>
+                                        {theme.direction === 'ltr' ? <ChevronLeftIcon /> : <ChevronRightIcon />}
+                                </IconButton>
+                        </div>
+
+                        <div className={classes.menuTitle}>
                                 <Typography variant="h5">
                                         MENU
                                 </Typography>
                         </div>
-                        <Divider/>
+                        <Divider />
 
                         <List>
                                 {
                                         menuItems.map(item => (
                                                 <div key={item.text}>
-                                                <ListItem
-                                                        
-                                                        button
-                                                        onClick={() => history.push(item.path)}
-                                                        className={location.pathname === item.path ? classes.active : null}
-                                                >
-                                                        <ListItemIcon>{item.icon}</ListItemIcon>
-                                                        <ListItemText primary={item.text}/>
-                                                </ListItem>
+                                                        <ListItem
 
-                                                <Divider light={true} variant="middle" component="hr" />
+                                                                button
+                                                                onClick={() => history.push(item.path)}
+                                                                className={location.pathname === item.path ? classes.active : null}
+                                                        >
+                                                                <ListItemIcon>{item.icon}</ListItemIcon>
+                                                                <ListItemText primary={item.text} />
+                                                        </ListItem>
+
+                                                        <Divider light={true} variant="middle" component="hr" />
 
                                                 </div>
                                         ))
