@@ -8,7 +8,7 @@ import TableHead from "@material-ui/core/TableHead";
 import TableRow from "@material-ui/core/TableRow";
 import Paper from "@material-ui/core/Paper";
 import Button from "@material-ui/core/Button"
-import { useHistory, useLocation } from 'react-router-dom'
+import { useHistory } from 'react-router-dom'
 
 import JobAdvertisementService from "../services/jobAdvertisementService";
 import ErrorPage from "./ErrorPage";
@@ -73,7 +73,7 @@ function JobAdvertisementPage() {
               <TableCell align="center">{job.openPosition}</TableCell>
               <TableCell align="center">{job.publishedDate}</TableCell>
               <TableCell align="center">{job.lastDateToApply}</TableCell>
-              <TableCell align="center"><Button variant='outlined' onClick={() => history.push("/jobDetail/" + job.id)}>İNCELE</Button></TableCell>
+              <TableCell align="center"><Button variant='outlined' color="primary" onClick={() => history.push("/jobDetail/" + job.id)}>İNCELE</Button></TableCell>
             </TableRow>
           ))}
         </TableBody>

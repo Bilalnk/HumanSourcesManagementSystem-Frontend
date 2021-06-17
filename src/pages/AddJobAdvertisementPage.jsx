@@ -1,23 +1,24 @@
 import React from "react";
+import { useState, useEffect } from "react";
 import Typography from "@material-ui/core/Typography";
 import { makeStyles } from "@material-ui/core/styles";
-import { useState, useEffect } from "react";
 import { FormControl } from "@material-ui/core";
 import InputLabel from "@material-ui/core/InputLabel";
 import Select from "@material-ui/core/Select";
 import MenuItem from "@material-ui/core/MenuItem";
 import { Container } from "@material-ui/core";
-import CityService from "../services/cityService";
-import JobPositionService from "../services/jobPositionService";
-import Grid from '@material-ui/core/Grid';
-import DateFnsUtils from '@date-io/date-fns';
-import { MuiPickersUtilsProvider, KeyboardTimePicker, KeyboardDatePicker } from '@material-ui/pickers';
-import 'date-fns';
+import { MuiPickersUtilsProvider,KeyboardDatePicker } from '@material-ui/pickers';
 import Button from "@material-ui/core/Button";
 import KeyboardArrowRightIcon from "@material-ui/icons/KeyboardArrowRight";
 import TextField from "@material-ui/core/TextField";
+import Grid from '@material-ui/core/Grid';
 import { format } from "date-fns";
-
+import 'date-fns';
+import DateFnsUtils from '@date-io/date-fns';
+import JobPositionService from "../services/jobPositionService";
+import CityService from "../services/cityService";
+import WayOfWorkService from "../services/wayOfwork";
+import WorkTypeService from "../services/workTypeService";
 
 const useStyles = makeStyles((theme) => ({
         title: {
@@ -57,54 +58,65 @@ const useStyles = makeStyles((theme) => ({
         }
 }));
 
+
+const from = props => {
+        const {
+                classes,
+                values,
+                touched,
+                errors,
+                isSubmitting,
+                handleChange,
+                handleBlur,
+                handleSubmit,
+                handleReset
+        } = props;
+}
+
+
+
 function AddJobAdvertisementPage() {
         const classes = useStyles();
         const [city, setCity] = useState([]);
-        const [selectedCity, setSelectedCity] = useState("");
-
         const [jobPositions, setJobPositions] = useState([])
+        const [workType, setWorkType] = useState([])
+        const [wayOfWork, setWayOfWork] = useState([])
+        
+        const [selectedCity, setSelectedCity] = useState("");
         const [selectedJobPosition, setSelectedJobPositions] = useState("")
-
+        
         const [jobDescription, setJobDescription] = useState("")
         const [jobDescriptionError, setJobDescriptionError] = useState(false)
 
         const [minSalary, setMinSalary] = useState("")
         const [maxSalary, setMaxSalary] = useState("")
-
         const [openPositionCount, setOpenPositionCount] = useState("")
-
         const [selectedDate, setSelectedDate] = useState(new Date('2021-06-15'));
 
-        
-        
+
+
 
         useEffect(() => {
                 let cityService = new CityService();
+                let jobPositionService = new JobPositionService();
+                let wayOfWorkService = new WayOfWorkService();
+                let workTypeService = new WorkTypeService();
+                
+
                 cityService.getAll().then((result) => setCity(result.data.data));
-
-                let jobPositionService = new JobPositionService()
-                jobPositionService.getAll().then((result) => setJobPositions(result.data.data))
-                        .catch();
-
-                console.log(jobPositions)
+                jobPositionService.getAll().then((result) => setJobPositions(result.data.data)).catch();
+                wayOfWorkService.getAll().then((result) => setWayOfWork(result.data.data))
+                workTypeService.getAll().then((result => setWorkType(result.data.data)))
 
         }, []);
 
-        const handleChangeCities = (event) => {
-                setSelectedCity(event.target.value)
-        };
-
-        const handleChangeJobPositions = (event) => {
-                setSelectedJobPositions(event.target.value)
-        };
-
-
+        const handleChangeCities = (event) => { setSelectedCity(event.target.value)};
+        const handleChangeJobPositions = (event) => {setSelectedJobPositions(event.target.value)};
         const handleDateChange = (date) => {
                 var resultDate = format(selectedDate, 'yyyy-MM-dd')
                 setSelectedDate(date);
                 console.log(resultDate)
         };
- 
 
         const handleSubmit = (e) => {
                 // e.preventDefault()
@@ -115,9 +127,28 @@ function AddJobAdvertisementPage() {
 
                 if (jobDescription) {
                         setJobDescriptionError(false);
+                        console.log({ "selected": { selectedJobPosition }, jobDescription, selectedCity, minSalary, maxSalary, openPositionCount })
+                        console.log(
+                                {
+                                        "city": { selectedCity },
+                                        "closingDate": selectedDate.getFullYear() + "-" + selectedDate.getMonth() + "-" + selectedDate.getDay(),
+                                        "emlpoyer": { "id": 2 },
+                                        "jobDescription": jobDescription,
+                                        "jobPosition": { "id": 2 },
+                                        "maxSalary": maxSalary,
+                                        "minSalary": minSalary,
+                                        "numberOfOpenPosition": openPositionCount,
+                                        "wayOfWork": {
+                                                "id": 1
+                                        },
+                                        "workType": {
+                                                "id": 1
+                                        }
+                                }
+                        )
 
-                        console.log(jobDescription)
                 }
+
         };
 
 

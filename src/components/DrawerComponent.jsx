@@ -2,6 +2,8 @@ import React from "react";
 import { Drawer, makeStyles, useTheme, Typography, Divider, List, ListItem, ListItemText, ListItemIcon } from "@material-ui/core";
 import PlaylistAddCheckIcon from '@material-ui/icons/PlaylistAddCheck';
 import AddIcon from '@material-ui/icons/Add';
+import BusinessIcon from '@material-ui/icons/Business';
+import WorkIcon from '@material-ui/icons/Work';
 import { useHistory, useLocation } from 'react-router-dom'
 
 import ChevronLeftIcon from '@material-ui/icons/ChevronLeft';
@@ -55,14 +57,24 @@ function DrawerComponent() {
 
         const menuItems = [
                 {
-                        text: 'Job Advertisement',
+                        text: 'İş ilanları',
                         icon: <PlaylistAddCheckIcon />,
                         path: '/'
                 },
                 {
-                        text: 'Add a Job Advertisement',
+                        text: 'İş ilanı Ekle',
                         icon: <AddIcon />,
                         path: '/addadvertisement'
+                },
+                {
+                        text: 'İş verenler',
+                        icon: <BusinessIcon />,
+                        path: '/employers'
+                },
+                {
+                        text: 'İş Arayanlar',
+                        icon: <WorkIcon />,
+                        path: '/candidates'
                 }
         ]
 

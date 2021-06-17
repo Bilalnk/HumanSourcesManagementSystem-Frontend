@@ -7,7 +7,12 @@ import AddJobAdvertisementPage from "./pages/AddJobAdvertisementPage";
 import JobAdvertisementDetails from "./pages/JobAdvertisementDetails";
 
 import 'semantic-ui-css/semantic.min.css'
-import EmployersPage from "./pages/EmployersPage";
+import EmployerDetailPage from "./pages/EmployerDetailPage";
+import Employers from "./pages/EmployersPage";
+import From from "./pages/Form"
+import FormDeneme from "./pages/FormDeneme";
+import CandidatesPage from "./pages/CandidatesPage";
+import CandidateDetailPage from "./pages/CandidateDetailPage";
 
 const theme = createMuiTheme({
   pallette: {
@@ -37,7 +42,9 @@ function App() {
             </Route>
 
             <Route path="/addadvertisement">
-              <AddJobAdvertisementPage />
+              {/* <AddJobAdvertisementPage /> */}
+              {/* <From/> */}
+              <FormDeneme />
             </Route>
 
             <Route path="/jobDetail/:JobAdvertisementId">
@@ -45,24 +52,37 @@ function App() {
             </Route>
 
             <Route path="/employer/:employerId">
-              <EmployersPage/>
+              <EmployerDetailPage />
             </Route>
+
+            <Route path="/employers">
+              <Employers />
+            </Route>
+
+            <Route path="/candidates">
+              <CandidatesPage />
+            </Route>
+
+            <Route path="/candidate/:candidateId">
+              <CandidateDetailPage />
+            </Route>
+
           </Dashboard>
         </Switch>
       </Router>
     </ThemeProvider>
 
-// <ThemeProvider theme={theme}>
-//       <Router>
-//         <Switch>
+    // <ThemeProvider theme={theme}>
+    //       <Router>
+    //         <Switch>
 
-//           <Route path="/error">
-//             <ErrorPage />
-//           </Route>
+    //           <Route path="/error">
+    //             <ErrorPage />
+    //           </Route>
 
-//         </Switch>
-//       </Router>
-//     </ThemeProvider> 
+    //         </Switch>
+    //       </Router>
+    //     </ThemeProvider> 
 
   );
 }

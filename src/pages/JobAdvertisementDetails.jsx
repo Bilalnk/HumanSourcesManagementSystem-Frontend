@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
-import { useHistory, useLocation, useParams } from "react-router-dom";
-import { Header, Image, Table } from "semantic-ui-react";
+import { useHistory, useParams } from "react-router-dom";
+import {Table } from "semantic-ui-react";
 import CircularProgress from "@material-ui/core/CircularProgress";
 import { makeStyles } from "@material-ui/core/styles";
 import JobAdvertisementService from "../services/jobAdvertisementService";
@@ -46,7 +46,6 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 function JobAdvertisementDetails() {
-        const location = useLocation();
         const history = useHistory()
         const classes = useStyles();
         const { JobAdvertisementId } = useParams();
@@ -61,8 +60,8 @@ function JobAdvertisementDetails() {
                 jobAdvertisementService
                         .getJobAdveritsementById(JobAdvertisementId)
                         .then((result) => {
-                                setSelectedJobAdvertisement(result.data.data);
                                 console.log(selectedJobAdvertisement);
+                                setSelectedJobAdvertisement(result.data.data);
                                 setLoading(false);
                         })
                         .catch();
