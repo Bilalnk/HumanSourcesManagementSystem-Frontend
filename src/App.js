@@ -13,6 +13,7 @@ import From from "./pages/Form"
 import FormDeneme from "./pages/FormDeneme";
 import CandidatesPage from "./pages/CandidatesPage";
 import CandidateDetailPage from "./pages/CandidateDetailPage";
+import ErrorPage from "./pages/ErrorPage";
 
 const theme = createMuiTheme({
   pallette: {
@@ -35,39 +36,70 @@ function App() {
     <ThemeProvider theme={theme}>
       <Router>
         <Switch>
-          <Dashboard>
 
-            <Route exact path="/">
-              <JobAdvertisementPage />
-            </Route>
+          <Route exact path="/">
+            <Dashboard>
+              <Route exact path="/">
+                <JobAdvertisementPage />
+              </Route>
+            </Dashboard>
+          </Route>
 
-            <Route path="/addadvertisement">
-              {/* <AddJobAdvertisementPage /> */}
-              {/* <From/> */}
-              <FormDeneme />
-            </Route>
+          <Route path="/addadvertisement">
+            <Dashboard>
+              <Route path="/addadvertisement">
+                {/* <AddJobAdvertisementPage /> */}
+                {/* <From/> */}
+                <FormDeneme />
+              </Route>
+            </Dashboard>
+          </Route>
 
-            <Route path="/jobDetail/:JobAdvertisementId">
-              <JobAdvertisementDetails />
-            </Route>
 
-            <Route path="/employer/:employerId">
-              <EmployerDetailPage />
-            </Route>
+          <Route path="/jobDetail/:JobAdvertisementId">
+            <Dashboard>
+              <Route path="/jobDetail/:JobAdvertisementId">
+                <JobAdvertisementDetails />
+              </Route>
+            </Dashboard>
+          </Route>
 
-            <Route path="/employers">
-              <Employers />
-            </Route>
 
-            <Route path="/candidates">
-              <CandidatesPage />
-            </Route>
+          <Route path="/employer/:employerId">
+            <Dashboard>
+              <Route path="/employer/:employerId">
+                <EmployerDetailPage />
+              </Route>
+            </Dashboard>
+          </Route>
 
-            <Route path="/candidate/:candidateId">
-              <CandidateDetailPage />
-            </Route>
+          <Route path="/employers">
+            <Dashboard>
+              <Route path="/employers">
+                <Employers />
+              </Route>
+            </Dashboard>
+          </Route>
 
-          </Dashboard>
+
+          <Route path="/candidates">
+            <Dashboard>
+              <Route path="/candidates">
+                <CandidatesPage />
+              </Route>
+            </Dashboard>
+          </Route>
+
+          <Route path="/candidate/:candidateId">
+            <Dashboard>
+              <Route path="/candidate/:candidateId">
+                <CandidateDetailPage />
+              </Route>
+            </Dashboard>
+          </Route>
+
+          <Route component={ErrorPage} />
+
         </Switch>
       </Router>
     </ThemeProvider>
@@ -82,7 +114,7 @@ function App() {
 
     //         </Switch>
     //       </Router>
-    //     </ThemeProvider> 
+    //     </ThemeProvider>
 
   );
 }
