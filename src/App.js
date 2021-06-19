@@ -14,6 +14,7 @@ import FormDeneme from "./pages/FormDeneme";
 import CandidatesPage from "./pages/CandidatesPage";
 import CandidateDetailPage from "./pages/CandidateDetailPage";
 import ErrorPage from "./pages/ErrorPage";
+import AddJobAd from "./pages/AddJobAd";
 
 const theme = createMuiTheme({
   pallette: {
@@ -48,10 +49,28 @@ function App() {
           <Route path="/addadvertisement">
             <Dashboard>
               <Route path="/addadvertisement">
-                {/* <AddJobAdvertisementPage /> */}
-                {/* <From/> */}
-                <FormDeneme />
+
+                <AddJobAd />
               </Route>
+            </Dashboard>
+          </Route>
+
+          <Route path="/addtest">
+            <Dashboard>
+              <FormDeneme />
+            </Dashboard>
+          </Route>
+
+          <Route path="/addtest2">
+            <Dashboard>
+              <From />
+            </Dashboard>
+          </Route>
+
+
+          <Route path="/addtest3">
+            <Dashboard>
+              <AddJobAdvertisementPage />
             </Dashboard>
           </Route>
 
@@ -103,18 +122,6 @@ function App() {
         </Switch>
       </Router>
     </ThemeProvider>
-
-    // <ThemeProvider theme={theme}>
-    //       <Router>
-    //         <Switch>
-
-    //           <Route path="/error">
-    //             <ErrorPage />
-    //           </Route>
-
-    //         </Switch>
-    //       </Router>
-    //     </ThemeProvider>
 
   );
 }
