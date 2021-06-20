@@ -1,14 +1,13 @@
 
 import Grid from '@material-ui/core/Grid';
-import { useHistory, useLocation, useParams } from "react-router-dom";
+import { useParams } from "react-router-dom";
 
 import React, { useEffect, useState } from "react";
-import { Header, Image, Table } from "semantic-ui-react";
+import {Table } from "semantic-ui-react";
 import CircularProgress from "@material-ui/core/CircularProgress";
 import { makeStyles } from "@material-ui/core/styles";
 import EmployerService from "../services/employersService";
 import Link from '@material-ui/core/Link';
-import Button from "@material-ui/core/Button"
 import Typography from "@material-ui/core/Typography";
 import ErrorGif from "../error.gif";
 
@@ -20,8 +19,6 @@ import TableHead from "@material-ui/core/TableHead";
 import TableRow from "@material-ui/core/TableRow";
 import Paper from "@material-ui/core/Paper";
 import JobAdvertisementService from '../services/jobAdvertisementService';
-
-import { format } from "date-fns";
 
 const useStyles = makeStyles((theme) => ({
         loadingRoot: {

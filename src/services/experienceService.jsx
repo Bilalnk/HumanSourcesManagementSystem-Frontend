@@ -20,4 +20,8 @@ export default class ExperienceService {
         }
 
 
+        getByCandidateIdDesc(candidateId){
+                return axios.get(requestPath + "/getbycandidateId?candidateId=" + candidateId)
+        }
+
 }

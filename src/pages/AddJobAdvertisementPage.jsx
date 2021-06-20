@@ -3,11 +3,11 @@ import { useState, useEffect } from "react";
 import Typography from "@material-ui/core/Typography";
 import { makeStyles } from "@material-ui/core/styles";
 import { FormControl } from "@material-ui/core";
-import InputLabel from "@material-ui/core/InputLabel";
-import Select from "@material-ui/core/Select";
 import MenuItem from "@material-ui/core/MenuItem";
+import Select from "@material-ui/core/Select";
+import InputLabel from "@material-ui/core/InputLabel";
 import { Container } from "@material-ui/core";
-import { MuiPickersUtilsProvider,KeyboardDatePicker } from '@material-ui/pickers';
+import { MuiPickersUtilsProvider, KeyboardDatePicker } from '@material-ui/pickers';
 import Button from "@material-ui/core/Button";
 import KeyboardArrowRightIcon from "@material-ui/icons/KeyboardArrowRight";
 import TextField from "@material-ui/core/TextField";
@@ -19,6 +19,9 @@ import JobPositionService from "../services/jobPositionService";
 import CityService from "../services/cityService";
 import WayOfWorkService from "../services/wayOfwork";
 import WorkTypeService from "../services/workTypeService";
+import { Formik, Form } from 'formik'
+import * as Yup from 'yup'
+import { useFormik } from "formik";
 
 const useStyles = makeStyles((theme) => ({
         title: {
@@ -59,21 +62,6 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 
-const from = props => {
-        const {
-                classes,
-                values,
-                touched,
-                errors,
-                isSubmitting,
-                handleChange,
-                handleBlur,
-                handleSubmit,
-                handleReset
-        } = props;
-}
-
-
 
 function AddJobAdvertisementPage() {
         const classes = useStyles();
@@ -81,19 +69,6 @@ function AddJobAdvertisementPage() {
         const [jobPositions, setJobPositions] = useState([])
         const [workType, setWorkType] = useState([])
         const [wayOfWork, setWayOfWork] = useState([])
-        
-        const [selectedCity, setSelectedCity] = useState("");
-        const [selectedJobPosition, setSelectedJobPositions] = useState("")
-        
-        const [jobDescription, setJobDescription] = useState("")
-        const [jobDescriptionError, setJobDescriptionError] = useState(false)
-
-        const [minSalary, setMinSalary] = useState("")
-        const [maxSalary, setMaxSalary] = useState("")
-        const [openPositionCount, setOpenPositionCount] = useState("")
-        const [selectedDate, setSelectedDate] = useState(new Date('2021-06-15'));
-
-
 
 
         useEffect(() => {
@@ -101,7 +76,6 @@ function AddJobAdvertisementPage() {
                 let jobPositionService = new JobPositionService();
                 let wayOfWorkService = new WayOfWorkService();
                 let workTypeService = new WorkTypeService();
-                
 
                 cityService.getAll().then((result) => setCity(result.data.data));
                 jobPositionService.getAll().then((result) => setJobPositions(result.data.data)).catch();
@@ -110,44 +84,47 @@ function AddJobAdvertisementPage() {
 
         }, []);
 
-        const handleChangeCities = (event) => { setSelectedCity(event.target.value)};
-        const handleChangeJobPositions = (event) => {setSelectedJobPositions(event.target.value)};
-        const handleDateChange = (date) => {
-                var resultDate = format(selectedDate, 'yyyy-MM-dd')
-                setSelectedDate(date);
-                console.log(resultDate)
-        };
+        const validationSchema = Yup.object({
+                description: Yup.string().required("Bu alanın doldurulması zorunludur"),
+                closingDate: Yup.date().required("Bu alanın doldurulması zorunludur").typeError("Geçerli bir tarih girin"),
+                maxSalary: Yup.number().min(0, " sıfırdan küçük değer girilemez "),
+                minSalary: Yup.number().min(0, " sıfırdan küçük değer girilemez "),
+                openPositionCount: Yup.string().required("Bu alanın doldurulması zorunludur").min(1, " en az 1 olmalı"),
+                cityId: Yup.number().required("Bu alanın doldurulması zorunludur"),
+                employerId: Yup.number().required("Bu alanın doldurulması zorunludur"),
+                jobPositionId: Yup.number().required("Bu alanın doldurulması zorunludur"),
+                wayOfWorkId: Yup.number().required("Bu alanın doldurulması zorunludur"),
+                workTypeId: Yup.number().required("Bu alanın doldurulması zorunludur"),
+        })
+
+        const formik = useFormik({
+                initialValues: {
+                        description: "",
+                        publishedDate: "",
+                        closingDate: "",
+                        maxSalary: "",
+                        minSalary: "",
+                        openPositionCount: "",
+                        city: { id: "" },
+                        employer: { id: "" },
+                        jobPosition: { id: "" },
+                        wayOfWork: { id: "" },
+                        workType: { id: "" },
+
+                },
+                validationSchema: validationSchema,
+                onSubmit: (values) => {
+                        values.employerId = 4;
+                        console.log(values);
+                },
+
+        });
+
+
 
         const handleSubmit = (e) => {
                 // e.preventDefault()
-
-                if (jobDescription === "") {
-                        setJobDescriptionError(true);
-                }
-
-                if (jobDescription) {
-                        setJobDescriptionError(false);
-                        console.log({ "selected": { selectedJobPosition }, jobDescription, selectedCity, minSalary, maxSalary, openPositionCount })
-                        console.log(
-                                {
-                                        "city": { selectedCity },
-                                        "closingDate": selectedDate.getFullYear() + "-" + selectedDate.getMonth() + "-" + selectedDate.getDay(),
-                                        "emlpoyer": { "id": 2 },
-                                        "jobDescription": jobDescription,
-                                        "jobPosition": { "id": 2 },
-                                        "maxSalary": maxSalary,
-                                        "minSalary": minSalary,
-                                        "numberOfOpenPosition": openPositionCount,
-                                        "wayOfWork": {
-                                                "id": 1
-                                        },
-                                        "workType": {
-                                                "id": 1
-                                        }
-                                }
-                        )
-
-                }
+                console.log("butona bastın")
 
         };
 
@@ -164,148 +141,55 @@ function AddJobAdvertisementPage() {
                                 Add a Job Advertisement
                         </Typography>
 
+                        <form onSubmit={formik.handleSubmit}>
+                                <FormControl variant="outlined" className={classes.formControl}>
+                                        <InputLabel id="demo-simple-select-outlined-label">Job Positions</InputLabel>
+                                        <Select
+                                                id="jobPositionId"
+                                                label="Job Position"
+                                                labelId="demo-simple-select-outlined-label"
+                                                onBlur={formik.onBlur}
+                                                value={formik.values.jobPosition.id}
+                                                onChange={formik.handleChange}
+                                        >
+                                                <MenuItem value="">
+                                                        <em>None</em>
+                                                </MenuItem>
 
-                        <FormControl variant="outlined" className={classes.formControl}>
-                                <InputLabel id="demo-simple-select-outlined-label">Job Positions</InputLabel>
-                                <Select
-                                        labelId="demo-simple-select-outlined-label"
-                                        id="demo-simple-select-outlined"
-                                        value={selectedJobPosition}
-                                        onChange={handleChangeJobPositions}
-                                        label="Job Position"
-                                >
-                                        <MenuItem value="">
-                                                <em>None</em>
-                                        </MenuItem>
+                                                {jobPositions.map((position, index) => (
+                                                        <MenuItem key={index} value={position.id} label ={position.position}>{position.position}</MenuItem>
+                                                
+                                                ))}
+                                        </Select>
 
-                                        {jobPositions.map((position) => (
-                                                <MenuItem key={position.id} value={position.id}>{position.position}</MenuItem>
-                                        ))}
-                                </Select>
-                        </FormControl>
+                                </FormControl>
+                                {
+                                       
+                                                <div >
+                                                        {formik.errors.jobPosition}
+                                                </div>
+                                        
+                                }
 
 
-                        <form onSubmit={handleSubmit}>
-                                <TextField
-                                        onChange={(e) => setJobDescription(e.target.value)}
-                                        className={classes.field}
-                                        label="Job Description"
+
+                                
+
+
+                                <Button
+                                        onClick={() => {
+                                                handleSubmit();
+                                        }}
+                                        type="submit"
                                         variant="outlined"
-                                        color="secondary"
-                                        multiline
-                                        rows={4}
+                                        color="primary"
                                         fullWidth
-                                        required
-                                        error={jobDescriptionError}
-                                />
-                        </form>
-
-                        <FormControl variant="outlined" className={classes.formControl}>
-                                <InputLabel id="demo-simple-select-outlined-label">Cities</InputLabel>
-                                <Select
-                                        labelId="demo-simple-select-outlined-label"
-                                        id="demo-simple-select-outlined"
-                                        value={selectedCity}
-                                        onChange={handleChangeCities}
-                                        label="City"
+                                        endIcon={<KeyboardArrowRightIcon />}
+                                        className={classes.btn}
                                 >
-                                        <MenuItem value="">
-                                                <em>None</em>
-                                        </MenuItem>
-
-                                        {city.map((c) => (
-                                                <MenuItem key={c.id} value={c.id}>{c.city}</MenuItem>
-                                        ))}
-                                </Select>
-                        </FormControl>
-
-                        <form onSubmit={handleSubmit} className={classes.formControl}>
-                                <Typography
-                                        className={classes.salaryTitle}
-                                        variant="h6"
-                                        component="h2"
-                                        color="textSecondary"
-                                        gutterBottom
-                                >
-                                        Salary
-                                </Typography>
-                                <TextField
-                                        onChange={(e) => setMinSalary(e.target.value)}
-                                        id="min-salary"
-                                        label="Min"
-                                        type="number"
-                                        InputLabelProps={{
-                                                shrink: true,
-                                        }}
-                                        variant="outlined"
-                                        className={classes.salaryMin}
-                                />
-
-                                <TextField
-                                        onChange={(e) => setMaxSalary(e.target.value)}
-                                        id="max-salary"
-                                        label="Max"
-                                        type="number"
-                                        InputLabelProps={{
-                                                shrink: true,
-                                        }}
-                                        variant="outlined"
-                                        className={classes.salaryMax}
-                                />
-
+                                        SUBMIT
+                                </Button>
                         </form>
-
-                        <form onSubmit={handleSubmit} className={classes.formControl}>
-                                <TextField
-                                        onChange={(e) => setOpenPositionCount(e.target.value)}
-                                        id="open-position-count"
-                                        label="PositionCount"
-                                        fullWidth
-                                        type="number"
-                                        InputLabelProps={{
-                                                shrink: true,
-                                        }}
-                                        variant="outlined"
-                                />
-                        </form>
-
-
-
-                        <MuiPickersUtilsProvider utils={DateFnsUtils}>
-                                <Grid container justify="space-around">
-                                        <KeyboardDatePicker
-                                                disableToolbar
-                                                variant="inline"
-                                                format="MM/dd/yyyy"
-                                                margin="normal"
-                                                id="date-picker-inline"
-                                                label="Date picker inline"
-                                                value={selectedDate}
-                                                onChange={handleDateChange}
-                                                fullWidth
-                                                KeyboardButtonProps={{
-                                                        'aria-label': 'change date',
-                                                }}
-                                        />
-
-                                </Grid>
-                        </MuiPickersUtilsProvider>
-
-
-                        <Button
-                                onClick={() => {
-                                        handleSubmit();
-                                }}
-                                type="submit"
-                                variant="outlined"
-                                color="primary"
-                                fullWidth
-                                endIcon={<KeyboardArrowRightIcon />}
-                                className={classes.btn}
-                        >
-                                SUBMIT
-                        </Button>
-
                 </Container>
         );
 }

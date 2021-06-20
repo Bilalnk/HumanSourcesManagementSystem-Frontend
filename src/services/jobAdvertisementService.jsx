@@ -37,6 +37,16 @@ export default class JobAdvertisementService {
         updateAdvertisementActive(active, id){
                 return axios.get(requestPath + "/updateAdvertisementActive?active=" + active + "&id="+ id)
         }
+
+        updateAdvertisementConfirm(confirm, id){
+                return axios.get(requestPath + "/updateAdvertisementConfirm?confirm=" + confirm + "&id="+ id)
+        }
+
+        getByConfirmedByEmployeesFalseOrderByPublishedDateDesc(){
+                return axios.get(requestPath + "/getByConfirmedByEmployeesFalseOrderByPublishedDateDesc")
+        }
+
+
 }
 
 

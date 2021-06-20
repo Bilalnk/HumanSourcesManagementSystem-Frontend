@@ -15,6 +15,7 @@ import CandidatesPage from "./pages/CandidatesPage";
 import CandidateDetailPage from "./pages/CandidateDetailPage";
 import ErrorPage from "./pages/ErrorPage";
 import AddJobAd from "./pages/AddJobAd";
+import ConfirmJobAdvPage from "./pages/ConfirmJobAdvPage";
 
 const theme = createMuiTheme({
   pallette: {
@@ -49,7 +50,6 @@ function App() {
           <Route path="/addadvertisement">
             <Dashboard>
               <Route path="/addadvertisement">
-
                 <AddJobAd />
               </Route>
             </Dashboard>
@@ -114,6 +114,12 @@ function App() {
               <Route path="/candidate/:candidateId">
                 <CandidateDetailPage />
               </Route>
+            </Dashboard>
+          </Route>
+
+          <Route path="/disconfirmedadvertisements">
+            <Dashboard>
+                <ConfirmJobAdvPage/>
             </Dashboard>
           </Route>
 

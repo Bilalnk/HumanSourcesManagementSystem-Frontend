@@ -9,6 +9,7 @@ import { useHistory, useLocation } from 'react-router-dom'
 import ChevronLeftIcon from '@material-ui/icons/ChevronLeft';
 import ChevronRightIcon from '@material-ui/icons/ChevronRight';
 import IconButton from '@material-ui/core/IconButton';
+import CheckIcon from '@material-ui/icons/Check';
 
 const drawerWidth = 360
 
@@ -75,6 +76,11 @@ function DrawerComponent() {
                         text: 'İş Arayanlar',
                         icon: <WorkIcon />,
                         path: '/candidates'
+                },
+                {
+                        text: 'İş İlanları Onayla',
+                        icon: <CheckIcon />,
+                        path: '/disconfirmedadvertisements'
                 }
         ]
 

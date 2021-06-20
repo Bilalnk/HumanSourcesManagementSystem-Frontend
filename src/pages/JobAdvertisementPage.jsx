@@ -71,8 +71,8 @@ function JobAdvertisementPage() {
               </TableCell>
               <TableCell align="left">{job.jobPositionName}</TableCell>
               <TableCell align="center">{job.openPosition}</TableCell>
-              <TableCell align="center">{job.publishedDate}</TableCell>
-              <TableCell align="center">{job.lastDateToApply}</TableCell>
+              <TableCell align="center">{job.publishedDate.substring(0,10)}</TableCell>
+              <TableCell align="center">{job.lastDateToApply.substring(0,10)}</TableCell>
               <TableCell align="center"><Button variant='outlined' color="primary" onClick={() => history.push("/jobDetail/" + job.id)}>İNCELE</Button></TableCell>
             </TableRow>
           ))}
