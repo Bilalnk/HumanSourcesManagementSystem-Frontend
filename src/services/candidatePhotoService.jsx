@@ -18,5 +18,7 @@ export default class CandidatePhotoService {
         getById(id){
                 return axios.get(requestPath + "/getbyid?id=" + id)
         }
+
+        
         
 }

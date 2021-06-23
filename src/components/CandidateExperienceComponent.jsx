@@ -5,7 +5,7 @@ import TimelineSeparator from '@material-ui/lab/TimelineSeparator';
 import TimelineConnector from '@material-ui/lab/TimelineConnector';
 import TimelineContent from '@material-ui/lab/TimelineContent';
 import TimelineDot from '@material-ui/lab/TimelineDot';
-import { Paper, Typography } from '@material-ui/core';
+import { Typography } from '@material-ui/core';
 
 import CardContent from '@material-ui/core/CardContent';
 import CardHeader from '@material-ui/core/CardHeader';
@@ -14,6 +14,7 @@ import { makeStyles } from '@material-ui/core/styles';
 import { createMuiTheme, ThemeProvider } from '@material-ui/core/styles';
 import { useState, useEffect } from 'react';
 
+import CircularProgress from "@material-ui/core/CircularProgress";
 import CandidateExperienceService from '../services/experienceService'
 
 const useStyles = makeStyles((theme) => ({
@@ -27,12 +28,20 @@ const useStyles = makeStyles((theme) => ({
                 display: 'flex',
                 justifyContent: 'start'
         },
-        noInfo:{
-                display:'flex',
+        noInfo: {
+                display: 'flex',
                 justifyContent: 'center',
                 color: '#ff0000',
                 padding: 15
-        }
+        },
+        loadingRoot: {
+                display: "flex",
+                justifyContent: "center",
+                alignItems: "center",
+                "& > * + *": {
+                        marginRight: theme.spacing(3),
+                },
+        },
 
 }));
 
@@ -66,18 +75,25 @@ function CandidateExperienceComponent({ candidateId }) {
         let candidateExperienceService = new CandidateExperienceService()
         const classes = useStyles();
         const [info, setInfo] = useState([])
-        const [isNull, setIsNull] = useState(false)
+        const [isLoading, setLoading] = useState(true);
 
         useEffect(() => {
                 candidateExperienceService.getByCandidateIdDesc(candidateId).then((result) => {
                         setInfo(result.data.data)
-                        result.data.message == null ? setIsNull(true) : setIsNull(false)
+                        setLoading(false)
                 })
         }, [])
 
+        if (isLoading) {
+                return (
+                        <div className={classes.loadingRoot}>
+                                <CircularProgress color="secondary" classes={{ marginRight: 55 }} />
+                        </div>
+                );
+        }
 
-        if(info.length == 0){
-                return(
+        if (info.length == 0) {
+                return (
                         <div className={classes.noInfo}>
                                 <Typography>
                                         DENEYİM BİLGİSİ BULUNAMADI
@@ -93,32 +109,32 @@ function CandidateExperienceComponent({ candidateId }) {
                                 align='alternate'>
 
                                 {info.map((inf) => (
-                                                <TimelineItem>
-                                                        <TimelineSeparator>
-                                                                <TimelineDot />
-                                                                <TimelineConnector />
-                                                        </TimelineSeparator>
+                                        <TimelineItem>
+                                                <TimelineSeparator>
+                                                        <TimelineDot />
+                                                        <TimelineConnector />
+                                                </TimelineSeparator>
 
-                                                        <TimelineContent>
-                                                                <Card elevation={3} className={classes.root}>
-                                                                        <CardHeader
+                                                <TimelineContent>
+                                                        <Card elevation={3} className={classes.root}>
+                                                                <CardHeader
 
-                                                                                titleTypographyProps={{ variant: 'h6' }}
-                                                                                title={inf.workPlace}
-                                                                                subheader= {inf.startingDate - inf.departureDate}  
-                                                                        >
-                                                                        </CardHeader>
+                                                                        titleTypographyProps={{ variant: 'h6' }}
+                                                                        title={inf.workPlace}
+                                                                        subheader={inf.startingDate - inf.departureDate}
+                                                                >
+                                                                </CardHeader>
 
-                                                                        <CardContent>
-                                                                                <Typography variant="body1" color="textSecondary" component="p">
-                                                                                        sadsad
-                                                                                </Typography>
-                                                                        </CardContent>
+                                                                <CardContent>
+                                                                        <Typography variant="body1" color="textSecondary" component="p">
+                                                                                sadsad
+                                                                        </Typography>
+                                                                </CardContent>
 
-                                                                </Card>
-                                                        </TimelineContent>
-                                                </TimelineItem>
-                                        ))}
+                                                        </Card>
+                                                </TimelineContent>
+                                        </TimelineItem>
+                                ))}
                         </Timeline>
                 </ThemeProvider>
         )

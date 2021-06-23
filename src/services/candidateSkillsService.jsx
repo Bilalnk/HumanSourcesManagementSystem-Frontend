@@ -14,5 +14,9 @@ export default class CandidateSkillsService {
         add(candidateSkill){
                 return axios.post(requestPath + "/add", candidateSkill)
         }
+
+        getByCandidateId(id){
+                return axios.get(requestPath + "/getbycandidateid?candidateId=" + id)
+        }
         
 }

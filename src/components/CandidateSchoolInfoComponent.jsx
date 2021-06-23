@@ -5,7 +5,7 @@ import TimelineSeparator from '@material-ui/lab/TimelineSeparator';
 import TimelineConnector from '@material-ui/lab/TimelineConnector';
 import TimelineContent from '@material-ui/lab/TimelineContent';
 import TimelineDot from '@material-ui/lab/TimelineDot';
-import { Paper, Typography } from '@material-ui/core';
+import { Typography } from '@material-ui/core';
 
 import CardContent from '@material-ui/core/CardContent';
 import CardHeader from '@material-ui/core/CardHeader';
@@ -14,6 +14,7 @@ import { makeStyles } from '@material-ui/core/styles';
 import { createMuiTheme, ThemeProvider } from '@material-ui/core/styles';
 import { useState, useEffect } from 'react';
 
+import CircularProgress from "@material-ui/core/CircularProgress";
 import CandidateSchoolInfoService from '../services/candidateSchoolInfoService'
 
 const useStyles = makeStyles((theme) => ({
@@ -28,6 +29,23 @@ const useStyles = makeStyles((theme) => ({
                 justifyContent: 'start'
 
 
+        },
+        noInfo: {
+                display: 'flex',
+                justifyContent: 'center',
+                color: '#ff0000',
+                padding: 15
+        },
+        timelineConnector:{
+                background: theme.palette.primary.light
+        },
+        loadingRoot: {
+                display: "flex",
+                justifyContent: "center",
+                alignItems: "center",
+                "& > * + *": {
+                        marginRight: theme.spacing(3),
+                },
         },
 
 }));
@@ -62,12 +80,33 @@ function CandidateSchoolInfoComponent({ candidateId }) {
         let candidateSchoolInfoService = new CandidateSchoolInfoService()
         const classes = useStyles();
         const [info, setInfo] = useState([])
+        const [isLoading, setLoading] = useState(true);
 
         useEffect(() => {
                 candidateSchoolInfoService.getAllByIdOrderDesc(candidateId).then((result) => {
                         setInfo(result.data.data)
+                        setLoading(false)
                 })
         }, [])
+
+        
+        if (isLoading) {
+                return (
+                        <div className={classes.loadingRoot}>
+                                <CircularProgress color="secondary" classes={{ marginRight: 55 }} />
+                        </div>
+                );
+        }
+
+        if (info.length == 0) {
+                return (
+                        <div className={classes.noInfo}>
+                                <Typography>
+                                        OKUL BİLGİSİ BULUNAMADI
+                                </Typography>
+                        </div>
+                )
+        }
 
 
 
@@ -79,8 +118,8 @@ function CandidateSchoolInfoComponent({ candidateId }) {
                                 {info.map((inf) => (
                                                 <TimelineItem>
                                                         <TimelineSeparator>
-                                                                <TimelineDot />
-                                                                <TimelineConnector />
+                                                                <TimelineDot color="primary"/>
+                                                                <TimelineConnector className={classes.timelineConnector}/>
                                                         </TimelineSeparator>
 
                                                         <TimelineContent>

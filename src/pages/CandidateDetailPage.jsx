@@ -1,23 +1,29 @@
-import React, { useEffect, useState } from "react";
-import { useHistory, useParams } from "react-router-dom";
+import React from "react";
+import { useParams } from "react-router-dom";
 import { makeStyles } from '@material-ui/core/styles';
-import Avatar from '@material-ui/core/Avatar';
 import Card from '@material-ui/core/Card';
-import Chip from '@material-ui/core/Chip';
 
 import CandidateSchoolInfoComponent from '../components/CandidateSchoolInfoComponent';
 import CandidatesService from '../services/candidatesService'
 import CandidateExperienceComponent from "../components/CandidateExperienceComponent";
+import CandidateSkillsComponent from "../components/CandidateSkillsComponent";
+import CandidateLanguagesComponent from "../components/CandidateLanguagesComponent";
+import CandidatePersonalInfoComponent from "../components/CandidatePersonalInfoComponent";
+import CandidateBiographyComponent from  "../components/CandidateBiographyComponent"
 import { Typography, Divider } from "@material-ui/core";
 
 const useStyles = makeStyles((theme) => ({
 
         rootOfRoot: {
-                marginLeft: 35
+                marginLeft: 65,
+                display: 'flex',
+                flexDirection: 'column',
+                alignItems: 'center'
         },
         root: {
 
-                maxWidth: 1000,
+                maxWidth: 900,
+                minWidth: 900,
                 marginBottom: 20,
                 padding: 15
 
@@ -41,18 +47,28 @@ function CandidateDetailPage() {
         return (
                 <div className={classes.rootOfRoot}>
 
-                        <Avatar alt="Remy Sharp" src="/static/images/avatar/1.jpg" className={classes.large} />
+                        
 
-                        <Card className={classes.root}>
-                                <Avatar alt="Remy Sharp" src="/static/images/avatar/1.jpg" className={classes.large} />
-                                candidate detail {candidateId}
+                        <Card className={classes.root} >
+                                <CandidatePersonalInfoComponent candidateId={candidateId}/>        
 
-                                adı soyadı bod identity number email
                         </Card>
 
                         <Card className={classes.root}>
                                 <Typography
-                                        align='center'
+                                        align='left'
+                                        variant="h6"
+                                        component="h2"
+                                >BİYOGRAFİ
+                                </Typography>
+                                <Divider />
+                                <CandidateBiographyComponent candidateId={candidateId} />
+
+                        </Card>
+
+                        <Card className={classes.root}>
+                                <Typography
+                                        align='left'
                                         variant="h6"
                                         component="h2"
                                 >OKUL BİLGİSİ
@@ -63,21 +79,21 @@ function CandidateDetailPage() {
                         </Card>
 
 
-
                         <Card className={classes.root}>
                                 <Typography
-                                        align='center'
+                                        align='left'
                                         variant="h6"
                                         component="h2"
                                 >DİL BİLGİSİ
                                 </Typography>
                                 <Divider />
+                                <CandidateLanguagesComponent candidateId={candidateId} />
 
                         </Card>
 
                         <Card className={classes.root}>
                                 <Typography
-                                        align='center'
+                                        align='left'
                                         variant="h6"
                                         component="h2"
                                 >DENEYİM
@@ -88,7 +104,18 @@ function CandidateDetailPage() {
 
                         <Card className={classes.root}>
                                 <Typography
-                                        align='center'
+                                        align='left'
+                                        variant="h6"
+                                        component="h2"
+                                >YETENEKLER
+                                </Typography>
+                                <Divider />
+                                <CandidateSkillsComponent candidateId={candidateId} />
+                        </Card>
+
+                        <Card className={classes.root}>
+                                <Typography
+                                        align='left'
                                         variant="h6"
                                         component="h2"
                                 >BAĞLANTILAR
@@ -96,20 +123,6 @@ function CandidateDetailPage() {
                                 <Divider />
                         </Card>
 
-                        <Card className={classes.root}>
-                                <Typography
-                                        align='center'
-                                        variant="h6"
-                                        component="h2"
-                                >YETENEKLER
-                                </Typography>
-                                <Divider />
-                                <Chip label="Basic" variant="outlined" />
-                                <Chip label="Basic" variant="outlined" />
-                                <Chip label="Basic" variant="outlined" />
-                                <Chip label="Basic" variant="outlined" />
-                                <Chip label="Basic" variant="outlined" />
-                        </Card>
 
                 </div>
 

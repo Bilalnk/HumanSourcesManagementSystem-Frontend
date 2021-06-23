@@ -23,7 +23,7 @@ const useStyles = makeStyles({
                 width: '100%',
                 height: '100%'
         },
-        loadingRoot:{
+        loadingRoot: {
                 display: 'flex',
                 justifyContent: 'center'
         }
@@ -45,17 +45,18 @@ function ConfirmJobAdvPage() {
         useEffect(() => {
 
                 handleDisconfirmed()
+                setConfirmed(false)
+                setIsLoading(false)
         }, [confirmed])
 
         const handleDisconfirmed = () => {
                 setIsLoading(true)
                 jobAdvertisementService.getByConfirmedByEmployeesFalseOrderByPublishedDateDesc().then((result => {
                         setDisconfirmed(result.data.data);
-                        setConfirmed(false)
-                        setIsLoading(false)
+                       
                 }))
                 console.log(disconfirmed)
-                
+
         }
 
 
@@ -88,6 +89,7 @@ function ConfirmJobAdvPage() {
                                                 <TableCell align="center">Yayın Tarihi</TableCell>
                                                 <TableCell align="center">Son Başvuru Tarihi</TableCell>
                                                 <TableCell align="center">DETAY</TableCell>
+                                                <TableCell align="center">ONAY</TableCell>
                                         </TableRow>
                                 </TableHead>
                                 <TableBody>
@@ -101,14 +103,19 @@ function ConfirmJobAdvPage() {
                                                         <TableCell align="center">{job.publishedDate.substring(0, 10)}</TableCell>
                                                         <TableCell align="center">{job.closingDate.substring(0, 10)}</TableCell>
                                                         <TableCell align="center"><Button variant='outlined' color="primary"
-                                                                onClick={() => { history.push("/jobDetail/" + job.id)
+                                                                onClick={() => {
+                                                                        history.push("/jobDetail/" + job.id)
                                                                 }}>INCELE</Button></TableCell>
 
-                                                        <TableCell align="center"><Button variant='outlined' color="primary"
-                                                                onClick={() => {
-                                                                        handleConfirm(true, job.id);
-                                                                        setConfirmed(true)
-                                                                }}>ONAYLA</Button></TableCell>
+                                                        <TableCell align="center">
+                                                                <Button variant='outlined' color="primary"
+                                                                        onClick={() => {
+                                                                                handleConfirm(true, job.id);
+                                                                                setConfirmed(true)
+                                                                        }}>
+                                                                        ONAYLA
+                                                                </Button>
+                                                        </TableCell>
                                                 </TableRow>
                                         ))}
                                 </TableBody>

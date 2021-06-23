@@ -29,8 +29,8 @@ export default function AddJobAd() {
                 workType: Yup.object().required("Bu alanın doldurulması zorunludur"),
                 city: Yup.object().required("Bu alanın doldurulması zorunludur"),
                 numberOfOpenPosition: Yup.string().required("Posizyon sayısı zorunludur").min(1, "Posizyon sayısı 1 den küçük olamaz"),
-                minSalary: Yup.number().min(0, "0 Dan az olamaz").required("Bu alan zorunludur"),
-                maxSalary: Yup.number().min(0, "0 Dan az olamaz").required("Bu alan zorunludur")
+                minSalary: Yup.number().min(0, "0 Dan az olamaz"),
+                maxSalary: Yup.number().min(0, "0 Dan az olamaz")
         });
 
 

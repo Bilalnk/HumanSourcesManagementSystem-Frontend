@@ -3,7 +3,7 @@ import Grid from '@material-ui/core/Grid';
 import { useParams } from "react-router-dom";
 
 import React, { useEffect, useState } from "react";
-import {Table } from "semantic-ui-react";
+import { Table } from "semantic-ui-react";
 import CircularProgress from "@material-ui/core/CircularProgress";
 import { makeStyles } from "@material-ui/core/styles";
 import EmployerService from "../services/employersService";
@@ -146,10 +146,19 @@ function EmployersPage() {
                                 </Table>
                         </Grid>
 
+
                         <Grid item xs={12}>
 
                                 <TableContainer component={Paper}>
                                         <TableMaterial className={classes.table} aria-label="simple table">
+                                        <Table.Header>
+                                                <Table.Row>
+                                                        <Table.HeaderCell colSpan="5">
+
+                                                                <TableCell className={classes.tableHeader}> Firma İlanları </TableCell>
+                                                        </Table.HeaderCell>
+                                                </Table.Row>
+                                        </Table.Header>
                                                 <TableHead>
 
                                                         <TableRow>
@@ -161,28 +170,28 @@ function EmployersPage() {
                                                         </TableRow>
                                                 </TableHead>
                                                 <TableBody>
-                                                        
+
                                                         {advertisementOfEmployer.map((adv) => (
-                                                               
+
                                                                 <TableRow hover key={adv.id}>
                                                                         <TableCell component="th" scope="row">
-                                                                             {adv.id} 
+                                                                                {adv.id}
                                                                         </TableCell>
 
-                                                                        <TableCell align="center">{adv.jobPosition.position}</TableCell> 
-                                                                        <TableCell align="center">{adv.numberOfOpenPosition}</TableCell> 
-                                                                        <TableCell align="center">{adv.publishedDate.substring(0,10)}</TableCell> 
-                                                                        <TableCell align="center">{adv.closingDate.substring(0,10)}</TableCell> 
-                                                                        </TableRow>
+                                                                        <TableCell align="center">{adv.jobPosition.position}</TableCell>
+                                                                        <TableCell align="center">{adv.numberOfOpenPosition}</TableCell>
+                                                                        <TableCell align="center">{adv.publishedDate.substring(0, 10)}</TableCell>
+                                                                        <TableCell align="center">{adv.closingDate.substring(0, 10)}</TableCell>
+                                                                </TableRow>
                                                         ))}
 
-                                                        
+
                                                 </TableBody>
                                         </TableMaterial>
                                 </TableContainer>
                         </Grid>
                 </Grid >
         )
-        
+
 }
 export default EmployersPage
