@@ -32,11 +32,11 @@ function NaviAppBar() {
 
         function handleSignOut(params) {
                 setIsAuthenticated(false);
-                history.push("/");
         }
 
         function handleSignIn(params) {
                 setIsAuthenticated(true);
+                history.push("/login");
         }
 
         return (

@@ -1,15 +1,15 @@
-import React, { useEffect, useState } from "react";
-import { useFormik } from "formik";
 import * as Yup from "yup";
-import { Button, Dropdown, Input, TextArea, Card, Form, Grid } from "semantic-ui-react";
+import { useFormik } from "formik";
 import { useHistory } from "react-router-dom";
-import CityService from "../services/cityService";
-import JobPositionService from "../services/jobPositionService";
-//TODO WayOfWorkService olarak isimlendir
-import WayOfworkService from "../services/wayOfwork";
-import WorkTypeService from "../services/workTypeService";
-import JobAdvertisementService from "../services/jobAdvertisementService";
+import React, { useEffect, useState } from "react";
 import {Button as MButton}  from "@material-ui/core";
+import {Dropdown, Input, TextArea, Card, Form, Grid } from "semantic-ui-react";
+
+import CityService from "../services/cityService";
+import WorkTypeService from "../services/workTypeService";
+import WayOfworkService from "../services/wayOfWorkService"
+import JobPositionService from "../services/jobPositionService";
+import JobAdvertisementService from "../services/jobAdvertisementService";
 
 export default function AddJobAd() {
         const history = useHistory();
@@ -49,13 +49,8 @@ export default function AddJobAd() {
                 validationSchema: JobAdvertAddSchema,
                 onSubmit: (values) => {
                         values.employer = { id: 3 };
-                        // jobAdvertisementService.add(JSON.stringify(values)).then((result) => console.log(result.data.data));
                         jobAdvertisementService.add(values).then((result) => console.log(result.data.data));
-        
-                        
-                        console.log(values)
-                        // alert("İş ilanı eklendi personelin onayı ardından listelenecektir");
-                        // history.push("/");
+                        history.push("/");
                 },
         });
 
@@ -70,9 +65,6 @@ export default function AddJobAd() {
                 workTypeService.getAll().then((result) => setWorkPlaces(result.data.data));
                 cityService.getAll().then((result) => setCities(result.data.data));
                 jobPositionService.getAll().then((result) => setJobPositions(result.data.data));
-
-                console.log(workTimes)
-                console.log(workTimes)
         }, []);
 
         const workTimeOption = workTimes.map((workTime, index) => ({
@@ -310,8 +302,6 @@ export default function AddJobAd() {
                                                 variant="contained"
                                                 color="primary"
                                                 fullWidth
-                                                onClick={
-                                                        console.log(formik.errors)}
                                                 >
                                                         EKLE
                                                 </MButton>

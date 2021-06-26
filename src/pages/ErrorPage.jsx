@@ -8,14 +8,18 @@ const useStyles = makeStyles({
 
         error: {
                 display: 'flex',
-                justifyContent: 'center',
-                alignItems:'center',
+                position: 'absolute',
+                top: 0,
+                left: 0,
                 width: '100%',
-                backgroundColor: '#1b1b1b'
+                height: '100%',
+                padding: '1em',
+                justifyContent: 'center',
+                background:'#1b1b1b',
 
         },
         img:{
-                height: 760,
+                height: 500,
                 display: 'flex',
                 justifyContent: 'center',
                 alignItems:'center',
