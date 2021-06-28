@@ -14,6 +14,10 @@ export default class CandidateLanguagesService {
         add(candidateLanguage){
                 return axios.post(requestPath + "/add", candidateLanguage)
         }
+        
+        delete(id){
+                return axios.delete(requestPath + "//delete?id="+ id)
+        }
 
         getByCandidateId(candidateId){
                 return axios.get(requestPath + "/getByCandidateId?candidateId=" + candidateId)

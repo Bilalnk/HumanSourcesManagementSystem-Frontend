@@ -1,37 +1,45 @@
 import React from 'react'
-import {makeStyles } from '@material-ui/core'
+import { makeStyles } from '@material-ui/core'
+import { ToastContainer } from 'react-toastify';
 
 import NaviAppBar from '../components/NaviAppBar'
 import PagesComponent from './PagesComponent'
 import DrawerComponent from '../components/DrawerComponent'
 
 const useStyles = makeStyles(() => {
-        return{
+        return {
                 root: {
-                        display:'flex'
+                        display: 'flex'
                 }
         }
 })
 
 
-function Dashboard({children}) {
+function Dashboard({ children }) {
 
         const classes = useStyles()
 
         return (
-                <div className={classes.root}>
-                        
-                        {/* NavBar */}
-                        <NaviAppBar/>
 
-                        {/* Left Side Drawer */}
-                        <DrawerComponent/>
-                        
-                        {/* PAGES*/}
-                        <PagesComponent children={children}/>
+                <div>
+                        <ToastContainer />
 
-                        {/* FOOTER */}
+                        <div className={classes.root}>
 
+
+
+                                {/* NavBar */}
+                                <NaviAppBar />
+
+                                {/* Left Side Drawer */}
+                                <DrawerComponent />
+
+                                {/* PAGES*/}
+                                <PagesComponent children={children} />
+
+                                {/* FOOTER */}
+
+                        </div>
                 </div>
         )
 }

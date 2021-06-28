@@ -1,26 +1,12 @@
 import React, { useEffect, useState } from 'react'
 import { makeStyles } from '@material-ui/core/styles';
-import Table from '@material-ui/core/Table';
-import TableBody from '@material-ui/core/TableBody';
-import TableCell from '@material-ui/core/TableCell';
-import TableContainer from '@material-ui/core/TableContainer';
-import TableHead from '@material-ui/core/TableHead';
-import TableRow from '@material-ui/core/TableRow';
-import Paper from '@material-ui/core/Paper';
-import { Typography } from '@material-ui/core';
-
-
-import { useParams } from "react-router-dom";
-import Card from '@material-ui/core/Card';
-import { CardHeader } from "@material-ui/core";
-import EditIcon from '@material-ui/icons/Edit';
-import SaveIcon from '@material-ui/icons/Save';
-import CloseIcon from '@material-ui/icons/Close';
-import AddIcon from '@material-ui/icons/Add';
-import { IconButton } from '@material-ui/core';
-import { Divider } from "@material-ui/core";
-
+import { toast } from 'react-toastify';
+import { Save as SaveIcon, Close as CloseIcon, Add as AddIcon, Delete as DeleteIcon } from '@material-ui/icons';
 import CircularProgress from "@material-ui/core/CircularProgress";
+import {
+        Typography, CardHeader, IconButton, Divider, Card,
+        Table, TableHead, TableRow, TableContainer, TableBody, TableCell
+} from '@material-ui/core';
 
 import CandidateLanguageService from "../services/candidateLanguagesService"
 import CandidateEditLanguagesComponent from './CandidateEditLanguagesComponent';
@@ -69,6 +55,7 @@ function CandidateLanguagesComponent({ candidateId }) {
         const [changes, setChanges] = useState([])
         const [isLoading, setLoading] = useState(true);
         const [isClicked, setCliCked] = useState(false)
+        const [updatedInfos, setUpdatedInfos] = useState(false)
         const [error, setError] = useState("")
 
         const handleEdit = () => {
@@ -78,13 +65,27 @@ function CandidateLanguagesComponent({ candidateId }) {
         const handleSave = () => {
                 candidateLanguageService.add(changes).then((result) => {
                         console.log(result.data)
-                        if(!result.data.success){
+                        if (!result.data.success) {
                                 setError(result.data.message)
-                                console.log(error)
+                                toast.error(error)
+                        } else {
+                                toast.success("Dil Eklendi")
                         }
                 }
                 )
                 handleEdit()
+        }
+
+        const handleDelete = (id) => {
+                candidateLanguageService.delete(id).then((result) => {
+                        if (!result.data.success) {
+                                setError(result.data.message)
+                                toast.error(error)
+                        } else {
+                                toast.success(result.data.message)
+                        }
+                }
+                )
         }
 
         const getChanges = (lang, level) => {
@@ -101,15 +102,17 @@ function CandidateLanguagesComponent({ candidateId }) {
                 })
         }
 
-
+        //TODO veriler eklenince veya silinince anlık güncellenmiyor
         useEffect(() => {
+
+                setUpdatedInfos(false)
 
                 candidateLanguageService.getByCandidateId(candidateId).then((result) => {
                         setInfo(result.data.data)
                         setLoading(false)
                 })
 
-        }, [isClicked])
+        }, [updatedInfos])
 
         if (isLoading) {
                 return (
@@ -119,7 +122,7 @@ function CandidateLanguagesComponent({ candidateId }) {
                 );
         }
 
-        if (info.length == 0) {
+        if (info.length === 0) {
                 return (
                         <div className={classes.noInfo}>
                                 <Typography>
@@ -142,7 +145,10 @@ function CandidateLanguagesComponent({ candidateId }) {
 
                                                         </IconButton>
 
-                                                        <IconButton aria-label="settings" onClick={(e) => handleSave()}>
+                                                        <IconButton aria-label="settings" onClick={(e) => {
+                                                                handleSave()
+                                                                setUpdatedInfos(true)
+                                                        }}>
                                                                 <SaveIcon />
                                                         </IconButton>
 
@@ -168,6 +174,7 @@ function CandidateLanguagesComponent({ candidateId }) {
                                                         <TableRow>
                                                                 <TableCell>Dil </TableCell>
                                                                 <TableCell align="center">Seviye</TableCell>
+                                                                <TableCell align="center">Düzenle</TableCell>
                                                         </TableRow>
                                                 </TableHead>
                                                 <TableBody>
@@ -177,6 +184,14 @@ function CandidateLanguagesComponent({ candidateId }) {
                                                                                 {inf.languages.languagesName}
                                                                         </TableCell>
                                                                         <TableCell align="center">{inf.languageLevels.languageLevel}</TableCell>
+                                                                        <TableCell align="center">
+                                                                                <IconButton aria-label="settings" onClick={() => {
+                                                                                        handleDelete(inf.id);
+                                                                                        setUpdatedInfos(true)
+                                                                                }}>
+                                                                                        <DeleteIcon />
+                                                                                </IconButton>
+                                                                        </TableCell>
                                                                 </TableRow>
                                                         ))}
                                                 </TableBody>
