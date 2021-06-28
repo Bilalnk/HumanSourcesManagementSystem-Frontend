@@ -19,6 +19,8 @@ export default class CandidatePhotoService {
                 return axios.get(requestPath + "/getbyid?id=" + id)
         }
 
-        
+        addPreface(id, preface){
+                return axios.post(requestPath + "/addpreface?candidateId=" + id +"&preface=" + preface)
+        }
         
 }

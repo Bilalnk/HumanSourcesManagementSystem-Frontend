@@ -1,21 +1,18 @@
 import { createMuiTheme, ThemeProvider } from "@material-ui/core";
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
-import { useFormik } from "formik";
+import 'semantic-ui-css/semantic.min.css' 
+
+import Login from "./pages/Login";
+import AddJobAd from "./pages/AddJobAd";
+import ErrorPage from "./pages/ErrorPage";
 import Dashboard from "./layout/Dashboard";
-
-import JobAdvertisementPage from "./pages/JobAdvertisementPage";
-import JobAdvertisementDetails from "./pages/JobAdvertisementDetails";
-
-import 'semantic-ui-css/semantic.min.css'
-import EmployerDetailPage from "./pages/EmployerDetailPage";
 import Employers from "./pages/EmployersPage";
 import CandidatesPage from "./pages/CandidatesPage";
-import CandidateDetailPage from "./pages/CandidateDetailPage";
-import ErrorPage from "./pages/ErrorPage";
-import AddJobAd from "./pages/AddJobAd";
 import ConfirmJobAdvPage from "./pages/ConfirmJobAdvPage";
-import Signin from "./pages/Signin";
-import Login from "./pages/Login";
+import EmployerDetailPage from "./pages/EmployerDetailPage";
+import CandidateDetailPage from "./pages/CandidateDetailPage";
+import JobAdvertisementPage from "./pages/JobAdvertisementPage";
+import JobAdvertisementDetails from "./pages/JobAdvertisementDetails";
 
 const theme = createMuiTheme({
   pallette: {

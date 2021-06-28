@@ -26,8 +26,6 @@ const useStyles = makeStyles({
                 justifyContent: 'center',
                 background: 'linear-gradient(45deg, #aaff 30%, #FF8E53 90%)',
                 alignItems: 'center',
-
-
         },
         card: {
 
