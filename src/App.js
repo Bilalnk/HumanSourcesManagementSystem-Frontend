@@ -1,6 +1,7 @@
 import { createMuiTheme, ThemeProvider } from "@material-ui/core";
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
-import 'semantic-ui-css/semantic.min.css' 
+import 'semantic-ui-css/semantic.min.css'
+import { ToastContainer } from "react-toastify";
 
 import Login from "./pages/Login";
 import AddJobAd from "./pages/AddJobAd";
@@ -20,6 +21,8 @@ const theme = createMuiTheme({
       main: "#c1c1c1",
     },
     secondary: "#ffaa",
+
+    white: "#ffffff"
   },
   typography: {
     fontFamily: "Quicksand",
@@ -38,56 +41,57 @@ function App() {
 
           <Route exact path="/">
             <Dashboard>
-                <JobAdvertisementPage />
+              <JobAdvertisementPage />
             </Dashboard>
           </Route>
 
           <Route path="/addadvertisement">
             <Dashboard>
-                <AddJobAd />
+              <AddJobAd />
             </Dashboard>
           </Route>
 
           <Route path="/jobDetail/:JobAdvertisementId">
             <Dashboard>
-                <JobAdvertisementDetails />
+              <JobAdvertisementDetails />
             </Dashboard>
           </Route>
 
           <Route path="/employer/:employerId">
             <Dashboard>
-                <EmployerDetailPage />
+              <EmployerDetailPage />
             </Dashboard>
           </Route>
 
           <Route path="/employers">
             <Dashboard>
-                <Employers />
+              <Employers />
             </Dashboard>
           </Route>
 
           <Route path="/candidates">
             <Dashboard>
-                <CandidatesPage />
+              <CandidatesPage />
             </Dashboard>
           </Route>
 
           <Route path="/candidate/:candidateId">
             <Dashboard>
-                <CandidateDetailPage />
+              <CandidateDetailPage />
             </Dashboard>
           </Route>
 
           <Route path="/disconfirmedadvertisements">
             <Dashboard>
-                <ConfirmJobAdvPage/>
+              <ConfirmJobAdvPage />
             </Dashboard>
           </Route>
 
           <Route path="/login">
-                <Login/>
+            <ToastContainer />
+            <Login />
           </Route>
-        
+
           <Route component={ErrorPage} />
 
 

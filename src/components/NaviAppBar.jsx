@@ -7,7 +7,8 @@ import { Typography, makeStyles } from "@material-ui/core";
 import SignIn from "./SignIn";
 import SignOut from "./SignOut";
 
-const drawerWidth = 240;
+const drawerWidth = 350
+;
 
 const useStyles = makeStyles((theme) => {
         return {

@@ -1,7 +1,7 @@
 import axios from "axios"
 
 const domainName = "http://localhost:8081"
-const reqMap = "/api/school"
+const reqMap = "/api/schools"
 
 const requestPath = domainName + reqMap
 

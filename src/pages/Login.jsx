@@ -1,11 +1,12 @@
 import React from 'react'
 import { Formik, Form } from 'formik'
 import * as Yup from "yup"
+import { toast } from 'react-toastify';
 
-import { Container, Button as SButton } from 'semantic-ui-react';
+import { Container } from 'semantic-ui-react';
 import Card from '@material-ui/core/Card';
 import { Link, Typography } from '@material-ui/core';
-import { CardMedia, CardActionArea, CardContent } from '@material-ui/core';
+import { CardMedia, CardActionArea } from '@material-ui/core';
 import { makeStyles, Button } from '@material-ui/core';
 import UserService from '../services/userService';
 import HrmsTextInput from '../utilities/customFromControl/HrmsTextInput';
@@ -96,14 +97,19 @@ function Login() {
         const handleSubmit = (values) => {
                 setLoading(true)
                 userService.login(values.email, values.password)
-                .then((result) => {
-                        console.log(result.data)
-                        setLoading(false)
-                        console.log(result.data.success)
-                        if(result.data.success !== false){
-                                history.push("/")
-                        }
-                })
+                        .then((result) => {
+                                console.log(result.data)
+                                setLoading(false)
+                                console.log(result.data.success)
+                                if (result.data.success !== false) {
+                                        toast.success("Giriş Başarılı")
+                                        setTimeout(function () {
+                                                history.push("/")
+                                        }, 800);
+                                } else {
+                                        toast.error("Email veya parola yanlış")
+                                }
+                        })
         }
 
 
@@ -139,7 +145,7 @@ function Login() {
                                                 {isLoading ?
                                                         <div className={classes.loadingProgess}>
                                                                 <CircularProgress color="secondary" classes={{ marginRight: 55 }} />
-                                                        </div> 
+                                                        </div>
                                                         :
                                                         <div className={classes.form}>
                                                                 <Form className="ui form">

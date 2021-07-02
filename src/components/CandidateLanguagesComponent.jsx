@@ -46,7 +46,7 @@ const useStyles = makeStyles((theme) => ({
 
 
 
-function CandidateLanguagesComponent({ candidateId }) {
+function CandidateLanguagesComponent({ candidateId, handleClose }) {
 
         let candidateLanguageService = new CandidateLanguageService();
 
@@ -110,6 +110,7 @@ function CandidateLanguagesComponent({ candidateId }) {
                 candidateLanguageService.getByCandidateId(candidateId).then((result) => {
                         setInfo(result.data.data)
                         setLoading(false)
+                        handleClose()
                 })
 
         }, [updatedInfos])
@@ -174,7 +175,7 @@ function CandidateLanguagesComponent({ candidateId }) {
                                                         <TableRow>
                                                                 <TableCell>Dil </TableCell>
                                                                 <TableCell align="center">Seviye</TableCell>
-                                                                <TableCell align="center">Düzenle</TableCell>
+                                                                <TableCell align="center">Sil</TableCell>
                                                         </TableRow>
                                                 </TableHead>
                                                 <TableBody>

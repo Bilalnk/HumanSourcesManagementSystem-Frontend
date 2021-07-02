@@ -14,4 +14,8 @@ export default class SchoolDepartmentService {
         getAll(){
                 return axios.get(requestPath + "/getall")
         }
+
+        getBySchoolId(id){
+                return axios.get(requestPath + "/getdtobycshoolid?schoolId=" + id)
+        }
 }

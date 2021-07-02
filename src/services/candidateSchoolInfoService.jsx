@@ -16,6 +16,10 @@ export default class CandidateSchoolInfoService {
                 return axios.post(requestPath + "/add", candidateschoolinfo)
         }
 
+        delete(id){
+                return axios.delete(requestPath + "/delete?id="+id)
+        }
+
         getAllByIdOrderDesc(id){
                 return axios.get(requestPath + "/getallorderdesc?candidateId=" + id)
         }

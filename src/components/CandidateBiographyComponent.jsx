@@ -33,7 +33,7 @@ const useStyles = makeStyles({
 })
 
 
-function Biography({ candidateId }) {
+function Biography({ candidateId, handleClose }) {
 
         let candidatePhotoService = new CandidatePhotoService()
         const classes = useStyles()
@@ -63,6 +63,7 @@ function Biography({ candidateId }) {
                 candidatePhotoService.getById(candidateId).then((result) => {
                         setInfo(result.data.data)
                         setLoading(false)
+                        handleClose()
                 })
 
 

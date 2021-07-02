@@ -7,15 +7,21 @@ import TimelineContent from '@material-ui/lab/TimelineContent';
 import TimelineDot from '@material-ui/lab/TimelineDot';
 import { Typography } from '@material-ui/core';
 
+import { Edit as EditIcon, Save as SaveIcon, Close as CloseIcon, Add as AddIcon, Delete } from '@material-ui/icons';
+import { IconButton, Divider } from '@material-ui/core';
+
 import CardContent from '@material-ui/core/CardContent';
 import CardHeader from '@material-ui/core/CardHeader';
 import Card from '@material-ui/core/Card';
+import { CardActions } from '@material-ui/core';
 import { makeStyles } from '@material-ui/core/styles';
 import { createMuiTheme, ThemeProvider } from '@material-ui/core/styles';
 import { useState, useEffect } from 'react';
 
 import CircularProgress from "@material-ui/core/CircularProgress";
 import CandidateExperienceService from '../services/experienceService'
+import CandidateExperienceEditComponent from './CandidateExperienceEditComponent';
+import { toast } from 'react-toastify';
 
 const useStyles = makeStyles((theme) => ({
 
@@ -27,6 +33,14 @@ const useStyles = makeStyles((theme) => ({
                 padding: 15,
                 display: 'flex',
                 justifyContent: 'start'
+        },
+        root: {
+
+                maxWidth: 900,
+                minWidth: 900,
+                marginBottom: 20,
+                padding: 15
+
         },
         noInfo: {
                 display: 'flex',
@@ -46,43 +60,44 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 
-const theme = createMuiTheme({
-        overrides: {
-                // MuiTimelineItem: {
-                //         missingOppositeContent: {
-                //                 '&::before': {
-                //                         flex: 1
-                //                 }
-                //         }
-                // },
-                // MuiTimelineConnector: {
-                //         root: {
-                //                 marginBottom: -55
-                //         }
-                // },
-                // MuiTimelineSeparator: {
-                //         root: {
-                //                 marginTop: 55
-                //         }
-                // }
 
 
-        },
-});
-
-function CandidateExperienceComponent({ candidateId }) {
+function CandidateExperienceComponent({ candidateId, handleClose }) {
 
         let candidateExperienceService = new CandidateExperienceService()
         const classes = useStyles();
         const [info, setInfo] = useState([])
         const [isLoading, setLoading] = useState(true);
+        const [isClicked, setCliCked] = useState(false)
+        const [isChanged, setChanged] = useState(false)
+
+
+        const handleEdit = () => {
+                setCliCked(!isClicked)
+        }
+
+        const handleDelete = (id) => {
+                candidateExperienceService.delete(id).then((result) => {
+                        console.log(result.data)
+                        if(result.data.success){
+                                toast.success(result.data.message)
+                        }else{
+                                toast.error(result.data.message)
+                        }
+
+                })
+        }
+
 
         useEffect(() => {
+                setChanged(false)
                 candidateExperienceService.getByCandidateIdDesc(candidateId).then((result) => {
                         setInfo(result.data.data)
+                        console.log(info)
                         setLoading(false)
+                        handleClose()
                 })
-        }, [])
+        }, [isClicked | isChanged])
 
         if (isLoading) {
                 return (
@@ -92,51 +107,108 @@ function CandidateExperienceComponent({ candidateId }) {
                 );
         }
 
-        if (info.length == 0) {
-                return (
-                        <div className={classes.noInfo}>
-                                <Typography>
-                                        DENEYİM BİLGİSİ BULUNAMADI
-                                </Typography>
-                        </div>
-                )
-        }
-
 
         return (
-                <ThemeProvider theme={theme}>
-                        <Timeline
-                                align='alternate'>
 
-                                {info.map((inf) => (
-                                        <TimelineItem>
-                                                <TimelineSeparator>
-                                                        <TimelineDot />
-                                                        <TimelineConnector />
-                                                </TimelineSeparator>
 
-                                                <TimelineContent>
-                                                        <Card elevation={3} className={classes.root}>
-                                                                <CardHeader
+                <Card className={classes.root}>
+                        <CardHeader
 
-                                                                        titleTypographyProps={{ variant: 'h6' }}
-                                                                        title={inf.workPlace}
-                                                                        subheader={inf.startingDate - inf.departureDate}
-                                                                >
-                                                                </CardHeader>
+                                action={
+                                        <div>
+                                                {isClicked ? <div>
+                                                        <IconButton aria-label="settings" onClick={() => handleEdit()}>
+                                                                <CloseIcon />
+                                                        </IconButton>
 
-                                                                <CardContent>
-                                                                        <Typography variant="body1" color="textSecondary" component="p">
-                                                                                sadsad
-                                                                        </Typography>
-                                                                </CardContent>
+                                                </div> : <IconButton aria-label="settings" onClick={(e) => handleEdit()}>
+                                                        <AddIcon />
 
-                                                        </Card>
-                                                </TimelineContent>
-                                        </TimelineItem>
-                                ))}
-                        </Timeline>
-                </ThemeProvider>
+                                                </IconButton>}
+                                        </div>
+                                }
+
+                                title="DENEYİM"
+                        >
+                        </CardHeader>
+                        <Divider />
+
+                        {isClicked ?
+
+                                <CandidateExperienceEditComponent handleEdit={handleEdit} candidateId={candidateId} />
+
+                                :
+
+                                <div> {
+                                        info.length == 0 ?
+
+                                                <div className={classes.noInfo}>
+                                                        <Typography>
+                                                                DENEYİM BİLGİSİ BULUNAMADI
+                                                        </Typography>
+                                                </div>
+
+                                                :
+
+                                                <ThemeProvider>
+                                                        <Timeline
+                                                                align='alternate'>
+
+                                                                {info.map((inf) => (
+                                                                        <TimelineItem>
+                                                                                <TimelineSeparator>
+                                                                                        <TimelineDot />
+                                                                                        <TimelineConnector />
+                                                                                </TimelineSeparator>
+
+                                                                                <TimelineContent>
+                                                                                        <Card elevation={3} >
+                                                                                                <CardHeader
+
+                                                                                                        titleTypographyProps={{ variant: 'h6' }}
+                                                                                                        title={inf.workPlace}
+                                                                                                        subheader={`${inf.startingDate.substring(0, 10)} - ${inf.departureDate.substring(0, 10)}`}
+                                                                                                >
+                                                                                                </CardHeader>
+
+                                                                                                <CardContent >
+                                                                                                        <Typography variant="body1" color="textSecondary" component="p">
+                                                                                                                {inf.jobPositions.position}
+                                                                                                        </Typography>
+                                                                                                </CardContent>
+
+                                                                                                <CardActions
+                                                                                                style={{background: "linear-gradient(to right, #2980b9, #2c3e50)", maxHeight: 35}}
+                                                                                                >
+
+                                                                                                        <IconButton aria-label="settings" onClick={() => {
+
+                                                                                                                handleDelete(inf.id)
+                                                                                                                setChanged(true);
+                                                                                                        }}>
+                                                                                                                <Delete style={{color: "#ffffff"}}/>
+                                                                                                        </IconButton>
+                                                                                                        <IconButton aria-label="settings" onClick={() => console.log(inf)}>
+                                                                                                                <EditIcon style={{color: "#ffffff"}}/>
+                                                                                                        </IconButton>
+
+
+                                                                                                </CardActions>
+
+                                                                                        </Card>
+                                                                                </TimelineContent>
+                                                                        </TimelineItem>
+                                                                ))}
+                                                        </Timeline>
+                                                </ThemeProvider>
+                                }
+                                </div>
+
+
+                        }
+
+                </Card>
+
         )
 }
 

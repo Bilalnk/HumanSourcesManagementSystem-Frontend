@@ -11,15 +11,16 @@ import ChevronRightIcon from '@material-ui/icons/ChevronRight';
 import IconButton from '@material-ui/core/IconButton';
 import CheckIcon from '@material-ui/icons/Check';
 
-const drawerWidth = 360
+const drawerWidth = 350
 
 const useStyles = makeStyles((theme) => {
         return {
                 drawer: {
                         width: drawerWidth
+                        
                 },
                 drawerPaper: {
-                        width: drawerWidth
+                        width: drawerWidth,
                 },
                 menuTitle: {
                         display: 'flex',

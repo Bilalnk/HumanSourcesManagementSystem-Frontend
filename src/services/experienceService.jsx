@@ -19,6 +19,9 @@ export default class ExperienceService {
                 return axios.post(requestPath + "/add", experience)
         }
 
+        delete(id){
+                return axios.delete(requestPath + "/delete?id="+ id)
+        }
 
         getByCandidateIdDesc(candidateId){
                 return axios.get(requestPath + "/getbycandidateId?candidateId=" + candidateId)
