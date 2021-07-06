@@ -101,21 +101,8 @@ function CandidateDetailPage() {
                         <CandidateExperienceComponent handleClose={handleClose} candidateId={candidateId} />
 
 
-                        <Card className={classes.root}>
-                                <CardHeader
-
-                                        action={
-                                                <IconButton aria-label="settings" onClick={() => console.log("tıklandı")}>
-                                                        <EditIcon />
-                                                </IconButton>
-                                        }
-
-                                        title="YETENEKLER"
-                                >
-                                </CardHeader>
-                                <Divider />
                                 <CandidateSkillsComponent candidateId={candidateId} />
-                        </Card>
+                        
 
                         <Card className={classes.root}>
                                 <Typography

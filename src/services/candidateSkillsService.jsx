@@ -15,6 +15,10 @@ export default class CandidateSkillsService {
                 return axios.post(requestPath + "/add", candidateSkill)
         }
 
+        delete(id){
+                return axios.delete(requestPath + "/delete?id=" + id)
+        }
+
         getByCandidateId(id){
                 return axios.get(requestPath + "/getbycandidateid?candidateId=" + id)
         }

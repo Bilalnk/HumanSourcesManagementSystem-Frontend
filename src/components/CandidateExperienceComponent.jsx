@@ -178,7 +178,7 @@ function CandidateExperienceComponent({ candidateId, handleClose }) {
                                                                                                 </CardContent>
 
                                                                                                 <CardActions
-                                                                                                style={{background: "linear-gradient(to right, #2980b9, #2c3e50)", maxHeight: 35}}
+                                                                                                style={{background: "linear-gradient(to left, #2c3e50, #2980b9)", maxHeight: 35}}
                                                                                                 >
 
                                                                                                         <IconButton aria-label="settings" onClick={() => {
