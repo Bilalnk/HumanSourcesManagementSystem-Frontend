@@ -63,7 +63,6 @@ function CandidateDetailPage() {
 
         const handleClose = () => {
                 i++;
-                console.log(i)
                 if (i === 4) {
                         setOpen(false);
                 }
@@ -85,35 +84,18 @@ function CandidateDetailPage() {
                         <Backdrop className={classes.backdrop} open={open} >
                                 <CircularProgress color="inherit" />
                         </Backdrop>
-
-
-                        <Card className={classes.root} >
-                                <CandidatePersonalInfoComponent candidateId={candidateId} />
-                        </Card>
-
+                        
+                        <CandidatePersonalInfoComponent candidateId={candidateId} />
+                       
                         <CandidateBiographyComponent handleClose={handleClose} candidateId={candidateId} />
 
                         <CandidateSchoolInfoComponent handleClose={handleClose} candidateId={candidateId} />
 
                         <CandidateLanguagesComponent handleClose={handleClose} candidateId={candidateId} />
 
-
                         <CandidateExperienceComponent handleClose={handleClose} candidateId={candidateId} />
 
-
-                                <CandidateSkillsComponent candidateId={candidateId} />
-                        
-
-                        <Card className={classes.root}>
-                                <Typography
-                                        align='left'
-                                        variant="h6"
-                                        component="h2"
-                                >BAĞLANTILAR
-                                </Typography>
-                                <Divider />
-                        </Card>
-
+                        <CandidateSkillsComponent candidateId={candidateId} />
 
                 </div>
 

@@ -6,9 +6,6 @@ import { FormField, Label } from 'semantic-ui-react'
 function HrmsTextInput({...props}) {
 
         const [field, meta] =useField(props)
-        console.log(field)
-        // console.log(field.value)
-        // console.log(meta.value)
         
         return (
                 <FormField error={meta.touched && !!meta.error}>

@@ -1,20 +1,19 @@
 import React from 'react'
+import { toast } from 'react-toastify';
 import Chip from '@material-ui/core/Chip';
-import { useState, useEffect } from 'react';
-import { makeStyles } from '@material-ui/core/styles';
-import { Typography } from '@material-ui/core';
 import Card from '@material-ui/core/Card';
+import { Divider } from "@material-ui/core";
+import { useState, useEffect } from 'react';
+import { Typography } from '@material-ui/core';
 import { CardHeader } from "@material-ui/core";
 import { IconButton } from '@material-ui/core';
-import { Divider } from "@material-ui/core";
+import { makeStyles } from '@material-ui/core/styles';
+import CircularProgress from "@material-ui/core/CircularProgress";
+import { Close as CloseIcon, Add as AddIcon } from '@material-ui/icons';
 
-import { Edit as EditIcon, Save as SaveIcon, Close as CloseIcon, Add as AddIcon, Delete } from '@material-ui/icons';
+import CandidateEditSkillsComponent from './CandidateEditSkillsComponent';
 
 import CandidateSkillsService from '../services/candidateSkillsService'
-
-import CircularProgress from "@material-ui/core/CircularProgress";
-import CandidateEditSkillsComponent from './CandidateEditSkillsComponent';
-import { toast } from 'react-toastify';
 
 const useStyles = makeStyles((theme) => ({
 
@@ -29,7 +28,11 @@ const useStyles = makeStyles((theme) => ({
         rootContent: {
                 margin: 16,
                 display: 'flex',
-                justifyContent: 'center'
+                justifyContent: 'center',
+                flexWrap: 'wrap',
+                '& > *': {
+                        margin: theme.spacing(0.5),
+                },
         },
         chips: {
                 padding: 8,
@@ -70,9 +73,9 @@ function CandidateSkillsComponent({ candidateId }) {
 
         const handleDelete = (id) => {
                 candidateSkillsService.delete(id).then((result) => {
-                        if(result.data.success){
+                        if (result.data.success) {
                                 toast.success(result.data.message)
-                        }else{
+                        } else {
                                 toast.error(result.data.message)
                         }
                         console.log(result.data)
@@ -141,9 +144,9 @@ function CandidateSkillsComponent({ candidateId }) {
                                                                         <Chip className={classes.chips} color="primary" onDelete={() => {
                                                                                 handleDelete(inf.id)
                                                                                 setChanged(true)
-                                                                        }} 
-                                                                        label={inf.skills.skillName} 
-                                                                        variant="default" />
+                                                                        }}
+                                                                                label={inf.skills.skillName}
+                                                                                variant="default" />
                                                                 ))
                                                         }
                                                 </div>

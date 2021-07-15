@@ -18,6 +18,9 @@ import TableContainer from "@material-ui/core/TableContainer";
 import TableHead from "@material-ui/core/TableHead";
 import TableRow from "@material-ui/core/TableRow";
 import Paper from "@material-ui/core/Paper";
+import {Button} from "@material-ui/core";
+import { useHistory } from "react-router-dom";
+
 import JobAdvertisementService from '../services/jobAdvertisementService';
 
 const useStyles = makeStyles((theme) => ({
@@ -49,6 +52,7 @@ function EmployersPage() {
         const [selectedEmployer, setSelectedEmployer] = useState()
         const [advertisementOfEmployer, setAdvertisementOfEmployer] = useState([])
         const { employerId } = useParams();
+        const history = useHistory()
 
 
         useEffect(() => {
@@ -151,22 +155,23 @@ function EmployersPage() {
 
                                 <TableContainer component={Paper}>
                                         <TableMaterial className={classes.table} aria-label="simple table">
-                                        <Table.Header>
-                                                <Table.Row>
-                                                        <Table.HeaderCell colSpan="5">
+                                                <Table.Header>
+                                                        <Table.Row>
+                                                                <Table.HeaderCell colSpan="5">
 
-                                                                <TableCell className={classes.tableHeader}> Firma İlanları </TableCell>
-                                                        </Table.HeaderCell>
-                                                </Table.Row>
-                                        </Table.Header>
+                                                                        <TableCell className={classes.tableHeader}> Firma İlanları </TableCell>
+                                                                </Table.HeaderCell>
+                                                        </Table.Row>
+                                                </Table.Header>
                                                 <TableHead>
 
                                                         <TableRow>
-                                                                <TableCell> Firma Adı </TableCell>
+
                                                                 <TableCell align="center">  İş Pozisyonu</TableCell>
                                                                 <TableCell align="center">Açık Pozisyon</TableCell>
                                                                 <TableCell align="center">Yayın Tarihi</TableCell>
                                                                 <TableCell align="center">Son Başvuru Tarihi</TableCell>
+                                                                <TableCell align="center">İşlem</TableCell>
                                                         </TableRow>
                                                 </TableHead>
                                                 <TableBody>
@@ -174,14 +179,19 @@ function EmployersPage() {
                                                         {advertisementOfEmployer.map((adv) => (
 
                                                                 <TableRow hover key={adv.id}>
-                                                                        <TableCell component="th" scope="row">
-                                                                                {adv.id}
-                                                                        </TableCell>
-
                                                                         <TableCell align="center">{adv.jobPosition.position}</TableCell>
                                                                         <TableCell align="center">{adv.numberOfOpenPosition}</TableCell>
                                                                         <TableCell align="center">{adv.publishedDate.substring(0, 10)}</TableCell>
                                                                         <TableCell align="center">{adv.closingDate.substring(0, 10)}</TableCell>
+                                                                        <TableCell align="center">
+                                                                                <Button
+                                                                                        variant="outlined"
+                                                                                        color="primary"
+                                                                                        onClick={() => history.push("/jobDetail/" + adv.id)}
+                                                                                >
+                                                                                        İlana Gİt
+                                                                                </Button>
+                                                                        </TableCell>
                                                                 </TableRow>
                                                         ))}
 

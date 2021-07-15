@@ -5,6 +5,7 @@ import AddIcon from '@material-ui/icons/Add';
 import BusinessIcon from '@material-ui/icons/Business';
 import WorkIcon from '@material-ui/icons/Work';
 import { useHistory, useLocation } from 'react-router-dom'
+import { useSelector } from 'react-redux'
 
 import ChevronLeftIcon from '@material-ui/icons/ChevronLeft';
 import ChevronRightIcon from '@material-ui/icons/ChevronRight';
@@ -17,7 +18,7 @@ const useStyles = makeStyles((theme) => {
         return {
                 drawer: {
                         width: drawerWidth
-                        
+
                 },
                 drawerPaper: {
                         width: drawerWidth,
@@ -30,8 +31,10 @@ const useStyles = makeStyles((theme) => {
                 active: {
                         background: '#5959ff',
                         color: '#ffffff',
+                        border: "1px dashed #5959ff",
                         '&:hover': {
-                                color: '#5959ff'
+                                color: '#5959ff',
+                                border: "1px dashed #5959ff"
                         }
                 }
         }
@@ -46,7 +49,7 @@ function DrawerComponent() {
 
         const theme = useTheme();
 
-
+        const { userRole } = useSelector(state => state.role)
         const [open, setOpen] = React.useState(false);
 
         const handleDrawerOpen = () => {
@@ -57,33 +60,73 @@ function DrawerComponent() {
                 setOpen(false);
         };
 
-        const menuItems = [
-                {
-                        text: 'İş ilanları',
-                        icon: <PlaylistAddCheckIcon />,
-                        path: '/'
-                },
-                {
-                        text: 'İş ilanı Ekle',
-                        icon: <AddIcon />,
-                        path: '/addadvertisement'
-                },
-                {
-                        text: 'İş verenler',
-                        icon: <BusinessIcon />,
-                        path: '/employers'
-                },
-                {
-                        text: 'İş Arayanlar',
-                        icon: <WorkIcon />,
-                        path: '/candidates'
-                },
-                {
-                        text: 'İş İlanları Onayla',
-                        icon: <CheckIcon />,
-                        path: '/disconfirmedadvertisements'
-                }
-        ]
+        const menuItems =
+
+                userRole.role == "CANDIDATE" ?
+                        [
+
+
+                                {
+                                        text: 'İş ilanları',
+                                        icon: <PlaylistAddCheckIcon />,
+                                        path: '/'
+                                },
+                                {
+                                        text: 'İş verenler',
+                                        icon: <BusinessIcon />,
+                                        path: '/employers'
+                                },
+                        ]
+                        :
+
+                        userRole.role == "EMPLOYER" ?
+                                [
+                                        {
+                                                text: 'İş ilanları',
+                                                icon: <PlaylistAddCheckIcon />,
+                                                path: '/'
+                                        },
+
+                                        {
+                                                text: 'İş ilanı Ekle',
+                                                icon: <AddIcon />,
+                                                path: '/addadvertisement'
+                                        },
+                                        {
+                                                text: 'İş Arayanlar',
+                                                icon: <WorkIcon />,
+                                                path: '/candidates'
+                                        }
+                                ]
+
+                                :
+                                userRole.role == "EMPLOYEE" ?
+                                        [
+                                                {
+                                                        text: 'İş ilanları',
+                                                        icon: <PlaylistAddCheckIcon />,
+                                                        path: '/'
+                                                },
+                                                {
+                                                        text: 'İş verenler',
+                                                        icon: <BusinessIcon />,
+                                                        path: '/employers'
+                                                },
+                                                {
+                                                        text: 'İş Arayanlar',
+                                                        icon: <WorkIcon />,
+                                                        path: '/candidates'
+                                                },
+                                                {
+                                                        text: 'İş İlanları Onayla',
+                                                        icon: <CheckIcon />,
+                                                        path: '/disconfirmedadvertisements'
+                                                }
+                                        ]
+                                        :
+                                        [
+
+                                        ]
 
         return (
                 <Drawer

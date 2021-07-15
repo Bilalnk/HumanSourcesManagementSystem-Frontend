@@ -1,16 +1,12 @@
-import React, { useEffect, useState } from "react";
 import * as Yup from "yup";
 import { useFormik } from "formik";
 import { toast } from "react-toastify";
-import { makeStyles } from "@material-ui/styles";
+import { Form } from "semantic-ui-react";
 import { Button } from "@material-ui/core"
-import { Dropdown, Input, TextArea, Card, Form, Grid } from "semantic-ui-react";
-
-
-import MenuItem from '@material-ui/core/MenuItem';
-import FormHelperText from '@material-ui/core/FormHelperText';
-import FormControl from '@material-ui/core/FormControl';
 import Select from '@material-ui/core/Select';
+import MenuItem from '@material-ui/core/MenuItem';
+import React, { useEffect, useState } from "react";
+import FormControl from '@material-ui/core/FormControl';
 
 import SkillsService from "../services/skillsService"
 import CandidateSkillsService from "../services/candidateSkillsService"

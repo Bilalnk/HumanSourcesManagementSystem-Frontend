@@ -14,6 +14,12 @@ import { CircularProgress } from '@material-ui/core';
 import { useState } from 'react';
 import { useHistory } from 'react-router';
 
+
+
+import { useDispatch } from 'react-redux'
+import { login } from "../store/actions/userActions"
+import {addUserRole} from "../store/actions/userRoleActions"
+
 const useStyles = makeStyles({
 
         root: {
@@ -94,13 +100,17 @@ function Login() {
                 password: "",
         }
 
+        const dispatch = useDispatch() // bir fonksiyon çağırmak için kullanılmaktadır.
+
+
         const handleSubmit = (values) => {
                 setLoading(true)
-                userService.login(values.email, values.password)
+
+                userService.getLoggedinUser(values.email, values.password)
                         .then((result) => {
-                                console.log(result.data)
+                                dispatch(login(result.data.data))
+                                dispatch(addUserRole(result.data.message))
                                 setLoading(false)
-                                console.log(result.data.success)
                                 if (result.data.success !== false) {
                                         toast.success("Giriş Başarılı")
                                         setTimeout(function () {
@@ -109,7 +119,23 @@ function Login() {
                                 } else {
                                         toast.error("Email veya parola yanlış")
                                 }
+
                         })
+
+                // userService.login(values.email, values.password)
+                //         .then((result) => {
+                //                 console.log(result.data)
+                //                 setLoading(false)
+                //                 console.log(result.data.success)
+                //                 if (result.data.success !== false) {
+                //                         toast.success("Giriş Başarılı")
+                //                         setTimeout(function () {
+                //                                 history.push("/")
+                //                         }, 800);
+                //                 } else {
+                //                         toast.error("Email veya parola yanlış")
+                //                 }
+                //         })
         }
 
 

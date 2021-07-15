@@ -4,6 +4,10 @@ import ToolBar from "@material-ui/core/Toolbar";
 import { useHistory } from 'react-router'
 import { Typography, makeStyles } from "@material-ui/core";
 
+import { useSelector } from 'react-redux'
+
+import { useEffect } from "react";
+
 import SignIn from "./SignIn";
 import SignOut from "./SignOut";
 
@@ -31,6 +35,15 @@ function NaviAppBar() {
         const classes = useStyles();
         const history = useHistory()
 
+        const {currentUser} = useSelector(state => state.user)
+
+
+        useEffect(() => {
+                if(currentUser){
+                        setIsAuthenticated(true)
+                }
+        }, [])
+
         function handleSignOut(params) {
                 setIsAuthenticated(false);
         }
@@ -45,7 +58,9 @@ function NaviAppBar() {
                         <ToolBar>
                                 <Typography className={classes.siteName}>HRMS</Typography>
 
-                                {isAuthenticated ? <SignIn signOut={handleSignOut} /> : <SignOut SignIn={handleSignIn}/>}
+                                
+
+                                {isAuthenticated ? <SignIn user = {currentUser} signOut={handleSignOut} /> : <SignOut SignIn={handleSignIn}/>}
                         </ToolBar>
                 </AppBar>
         );

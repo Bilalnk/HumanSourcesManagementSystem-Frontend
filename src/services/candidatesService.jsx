@@ -22,4 +22,8 @@ export default class CandidatesService {
         getCv(id){
                 return axios.get(requestPath + "/getcv?id=" + id)
         }
+
+        update(info){
+                return axios.post(requestPath + "/update", info)
+        }
 }

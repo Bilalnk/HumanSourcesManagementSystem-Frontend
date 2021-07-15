@@ -58,8 +58,6 @@ function Biography({ candidateId, handleClose }) {
         }
 
         useEffect(() => {
-                console.log("git gel")
-
                 candidatePhotoService.getById(candidateId).then((result) => {
                         setInfo(result.data.data)
                         setLoading(false)

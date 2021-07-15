@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { useHistory, useParams } from "react-router-dom";
-import {Table } from "semantic-ui-react";
+import { Table } from "semantic-ui-react";
 import CircularProgress from "@material-ui/core/CircularProgress";
 import { makeStyles } from "@material-ui/core/styles";
 import JobAdvertisementService from "../services/jobAdvertisementService";
@@ -9,6 +9,14 @@ import Grid from '@material-ui/core/Grid';
 import Button from "@material-ui/core/Button"
 import Typography from "@material-ui/core/Typography";
 import ErrorGif from "../error.gif";
+
+
+import { toast } from 'react-toastify';
+
+import { useSelector } from 'react-redux'
+
+import { FavoriteBorderOutlined } from "@material-ui/icons";
+import CandidateFavoriteJobsService from "../services/candidateFavoriteJobsService";
 
 const useStyles = makeStyles((theme) => ({
         loadingRoot: {
@@ -46,17 +54,22 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 function JobAdvertisementDetails() {
+        let jobAdvertisementService = new JobAdvertisementService();
+        let candidateFavoriteJobsService = new CandidateFavoriteJobsService()
+
         const history = useHistory()
         const classes = useStyles();
         const { JobAdvertisementId } = useParams();
         const [selectedJobAdvertisement, setSelectedJobAdvertisement] = useState();
         const [isLoading, setLoading] = useState(true);
 
+        const { currentUser } = useSelector(state => state.user)
+        const { userRole } = useSelector(state => state.role)
+
         const preventDefault = (event) => event.preventDefault();
 
         useEffect(() => {
                 setLoading(true);
-                let jobAdvertisementService = new JobAdvertisementService();
                 jobAdvertisementService
                         .getJobAdveritsementById(JobAdvertisementId)
                         .then((result) => {
@@ -66,6 +79,28 @@ function JobAdvertisementDetails() {
                         })
                         .catch();
         }, []);
+
+        const handleJobAddToFav = () => {
+
+                const model = {
+                        "candidates": {
+                                "id": currentUser.user.id
+                        },
+                        "jobAdvertisement": {
+
+                                "id": JobAdvertisementId
+                        }
+                }
+
+                candidateFavoriteJobsService.add(model)
+                        .then((result) => {
+                                if (result.data.success) {
+                                        toast.success(result.data.message)
+                                } else {
+                                        toast.error(result.data.message)
+                                }
+                        })
+        }
 
         if (isLoading) {
                 return (
@@ -91,7 +126,7 @@ function JobAdvertisementDetails() {
                                         <Table fixed>
                                                 <Table.Header>
                                                         <Table.Row>
-                                                                <Table.HeaderCell colSpan="1">
+                                                                <Table.HeaderCell colSpan="2">
 
                                                                         <Typography className={classes.tableHeader}> Pozisyon Açıklaması </Typography>
                                                                 </Table.HeaderCell>
@@ -101,14 +136,47 @@ function JobAdvertisementDetails() {
                                                 <Table.Body>
 
                                                         <Table.Row>
-                                                                <Table.Cell>
+                                                                <Table.Cell colSpan="2">
                                                                         <Typography className={classes.positionDescription}> {selectedJobAdvertisement.jobDescription} </Typography>
 
                                                                 </Table.Cell>
                                                         </Table.Row>
-
-
                                                 </Table.Body>
+
+                                                {userRole.role == "CANDIDATE" ?
+
+                                                        <Table.Footer>
+                                                                <Table.Row>
+                                                                        <Table.HeaderCell colSpan="1">
+
+                                                                                <Button
+                                                                                        variant='outlined'
+                                                                                        color="primary"
+                                                                                        fullWidth
+                                                                                        onClick={() => handleJobAddToFav()}
+                                                                                >
+                                                                                        <FavoriteBorderOutlined style={{ marginRight: 5 }} />
+                                                                                        FAVORİLERE EKLE
+                                                                                </Button>
+
+                                                                        </Table.HeaderCell>
+                                                                        <Table.HeaderCell colSpan="1">
+
+                                                                                <Button
+                                                                                        variant='contained'
+                                                                                        color="primary"
+                                                                                        fullWidth
+                                                                                        onClick={() => console.log("BAŞVUR " + JobAdvertisementId)}
+                                                                                >
+                                                                                        BAŞVUR
+                                                                                </Button>
+                                                                        </Table.HeaderCell>
+                                                                </Table.Row>
+                                                        </Table.Footer>
+                                                        :
+                                                        null
+                                                }
+
                                         </Table>
                                 </Grid>
                                 <div> </div>

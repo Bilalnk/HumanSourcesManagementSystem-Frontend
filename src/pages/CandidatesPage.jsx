@@ -19,6 +19,16 @@ function CandidatesPage() {
 
         const [candidates, setCandidates] = useState([]);
 
+        const breakpoints = {
+                default: 4,
+                2800: 7,
+                2500: 6,
+                2100: 5,
+                1800: 4,
+                1500: 3,
+                1200: 2,
+                950: 1
+        }
 
         useEffect(() => {
 
@@ -29,10 +39,10 @@ function CandidatesPage() {
 
         return (
 
-                <Masonary 
-                breakpointCols={4}
-                className="my-masonry-grid"
-                columnClassName="my-masonry-grid_column">
+                <Masonary
+                        breakpointCols={breakpoints}
+                        className="my-masonry-grid"
+                        columnClassName="my-masonry-grid_column">
 
                         {candidates.map(candidate => (
                                 <div key={candidate.id}>

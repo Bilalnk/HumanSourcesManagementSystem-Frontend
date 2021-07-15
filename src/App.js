@@ -3,6 +3,8 @@ import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 import 'semantic-ui-css/semantic.min.css'
 import { ToastContainer } from "react-toastify";
 
+import { useHistory } from "react-router-dom";
+
 import Login from "./pages/Login";
 import AddJobAd from "./pages/AddJobAd";
 import ErrorPage from "./pages/ErrorPage";
@@ -34,10 +36,17 @@ const theme = createMuiTheme({
 });
 
 function App() {
+
+  let history = useHistory();
+
   return (
     <ThemeProvider theme={theme}>
       <Router>
         <Switch>
+          <Route  path="/login">
+            <ToastContainer />
+            <Login />
+          </Route>
 
           <Route exact path="/">
             <Dashboard>
@@ -87,10 +96,7 @@ function App() {
             </Dashboard>
           </Route>
 
-          <Route path="/login">
-            <ToastContainer />
-            <Login />
-          </Route>
+
 
           <Route component={ErrorPage} />
 

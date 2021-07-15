@@ -7,7 +7,7 @@ import TimelineContent from '@material-ui/lab/TimelineContent';
 import TimelineDot from '@material-ui/lab/TimelineDot';
 import { Typography } from '@material-ui/core';
 
-import { Edit as EditIcon, Save as SaveIcon, Close as CloseIcon, Add as AddIcon, Delete } from '@material-ui/icons';
+import { Edit as EditIcon, Close as CloseIcon, Add as AddIcon, Delete } from '@material-ui/icons';
 import { IconButton, Divider } from '@material-ui/core';
 
 import CardContent from '@material-ui/core/CardContent';
@@ -15,7 +15,7 @@ import CardHeader from '@material-ui/core/CardHeader';
 import Card from '@material-ui/core/Card';
 import { CardActions } from '@material-ui/core';
 import { makeStyles } from '@material-ui/core/styles';
-import { createMuiTheme, ThemeProvider } from '@material-ui/core/styles';
+import {  ThemeProvider } from '@material-ui/core/styles';
 import { useState, useEffect } from 'react';
 
 import CircularProgress from "@material-ui/core/CircularProgress";
@@ -93,7 +93,6 @@ function CandidateExperienceComponent({ candidateId, handleClose }) {
                 setChanged(false)
                 candidateExperienceService.getByCandidateIdDesc(candidateId).then((result) => {
                         setInfo(result.data.data)
-                        console.log(info)
                         setLoading(false)
                         handleClose()
                 })

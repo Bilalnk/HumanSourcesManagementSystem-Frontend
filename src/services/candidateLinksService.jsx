@@ -11,6 +11,10 @@ export default class CandidateLinksService {
                 return axios.get(requestPath + "/getall")
         }
 
+        getDtoByCandidateId(id){
+                return axios.get(requestPath + "/getlinksdtosbycandidateid?id="+ id)
+        }
+
         add(candidateLink){
                 return axios.post(requestPath + "/add", candidateLink)
         }
