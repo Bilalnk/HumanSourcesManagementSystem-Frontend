@@ -11,7 +11,7 @@ import { useEffect } from "react";
 import SignIn from "./SignIn";
 import SignOut from "./SignOut";
 
-const drawerWidth = 350
+const drawerWidth = 300
 ;
 
 const useStyles = makeStyles((theme) => {

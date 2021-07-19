@@ -12,7 +12,7 @@ import ChevronRightIcon from '@material-ui/icons/ChevronRight';
 import IconButton from '@material-ui/core/IconButton';
 import CheckIcon from '@material-ui/icons/Check';
 
-const drawerWidth = 350
+const drawerWidth = 300
 
 const useStyles = makeStyles((theme) => {
         return {

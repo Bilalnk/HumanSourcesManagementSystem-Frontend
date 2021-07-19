@@ -8,41 +8,45 @@ const requestPath = domainName + reqMap
 export default class JobAdvertisementService {
 
 
-        add(jobAdvertisement){
+        add(jobAdvertisement) {
                 return axios.post(requestPath + "/add", jobAdvertisement)
         }
 
-        getByActiveTrue(){
+        getByActiveTrue() {
                 return axios.get(requestPath + "/getactives")
         }
 
-        getByActiveTrueAndEmployerId (employerId){
+        getByActiveTrueAndEmployerId(employerId) {
 
                 return axios.get(requestPath + "/getactiveandemployer?employerId=" + employerId)
         }
-        
-        getByActiveTrueOrderByPublishedDateDesc (){
+
+        getByActiveTrueOrderByPublishedDateDesc() {
                 return axios.get(requestPath + "/getactivesasc")
         }
 
-        
-        getJobAdveritsementDetails(){
+
+        getJobAdveritsementDetails() {
                 return axios.get(requestPath + "/getjobadvertisementdetails")
         }
 
-        getJobAdveritsementById(id){
+        getFilteredAndPaginated(filter = {}, pageNo = 1, pageSize = 10) {
+                return axios.post(requestPath + "/get-filtered-and-paginated?pageNo=" + pageNo + "&pageSize=" + pageSize, filter)
+        }
+
+        getJobAdveritsementById(id) {
                 return axios.get(requestPath + "/getjobadvertisementbyid?id=" + id)
         }
-        
-        updateAdvertisementActive(active, id){
-                return axios.get(requestPath + "/updateAdvertisementActive?active=" + active + "&id="+ id)
+
+        updateAdvertisementActive(active, id) {
+                return axios.get(requestPath + "/updateAdvertisementActive?active=" + active + "&id=" + id)
         }
 
-        updateAdvertisementConfirm(confirm, id){
-                return axios.get(requestPath + "/updateAdvertisementConfirm?confirm=" + confirm + "&id="+ id)
+        updateAdvertisementConfirm(confirm, id) {
+                return axios.get(requestPath + "/updateAdvertisementConfirm?confirm=" + confirm + "&id=" + id)
         }
 
-        getByConfirmedByEmployeesFalseOrderByPublishedDateDesc(){
+        getByConfirmedByEmployeesFalseOrderByPublishedDateDesc() {
                 return axios.get(requestPath + "/getByConfirmedByEmployeesFalseOrderByPublishedDateDesc")
         }
 
