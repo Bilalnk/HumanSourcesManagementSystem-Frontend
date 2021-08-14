@@ -4,8 +4,6 @@ import { makeStyles } from "@material-ui/core/styles";
 import { FavoriteBorderOutlined } from "@material-ui/icons";
 
 import ArrowDropDownIcon from '@material-ui/icons/ArrowDropDown';
-
-
 import Backdrop from '@material-ui/core/Backdrop';
 import CircularProgress from '@material-ui/core/CircularProgress';
 
@@ -56,9 +54,6 @@ function JobAdvertisementPage() {
 
   const [jobAdvertisements, setJobAdvertisements] = useState([]);
   const [isError, setIsError] = useState(false)
-
-
-
 
   const [page, setPage] = React.useState(1);
   const [rowsPerPage, setRowsPerPage] = React.useState(10);
@@ -201,11 +196,12 @@ function JobAdvertisementPage() {
 
               <Pagination variant="outlined" color="primary" count={totalRowCount % rowsPerPage == 0 ? totalRowCount / rowsPerPage : totalRowCount / rowsPerPage < 0 ? 1 : parseInt(totalRowCount / rowsPerPage) + 1}
                 page={page}
-                onChange={handleChangePage} />
-
+                onChange={handleChangePage} 
+                />
             </div>
           </div>
         </Paper>
+
       </TableContainer>
 
       <JobFilterComponent handleFilter={handleFilter} />

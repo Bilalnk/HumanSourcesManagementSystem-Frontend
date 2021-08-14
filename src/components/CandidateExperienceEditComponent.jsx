@@ -101,7 +101,7 @@ function CandidateExperienceEditComponent({ candidateId, handleEdit }) {
                         <div className={classes.root}>
                                 <div className={classes.group}>
                                         <Form.Field className={classes.field}>
-                                                <label>Okul </label>
+                                                <label>İş Yeri </label>
                                                 <input
                                                         placeholder="İş Yeri"
                                                         error={Boolean(formik.errors.workPlace).toString()}
@@ -118,7 +118,7 @@ function CandidateExperienceEditComponent({ candidateId, handleEdit }) {
                                         </Form.Field>
 
                                         <Form.Field className={classes.field}>
-                                                <label >Bölüm </label>
+                                                <label >Pozisyon </label>
                                                 <Dropdown
                                                         clearable
                                                         item
