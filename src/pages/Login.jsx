@@ -192,7 +192,7 @@ function Login() {
 
                                         </Formik>
 
-                                        <Link href="/" className={classes.createAcount}>
+                                        <Link href="/login" className={classes.createAcount}>
                                                 Hesabın yok mu? Hemen hesap aç.
                                         </Link>
 
