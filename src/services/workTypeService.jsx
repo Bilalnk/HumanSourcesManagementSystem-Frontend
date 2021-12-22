@@ -1,6 +1,6 @@
+import { domainName } from "./baseService"
 import axios from "axios"
 
-const domainName = "http://localhost:8081"
 const reqMap = "/api/worktype"
 
 const requestPath = domainName + reqMap

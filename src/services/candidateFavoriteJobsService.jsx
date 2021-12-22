@@ -1,8 +1,7 @@
-import axios from "axios";
+import axios from "axios"
+import { domainName } from "./baseService"
 
-const domainName = "http://localhost:8081"
 const reqMap = "/api/favorites"
-
 const requestPath = domainName + reqMap
 
 

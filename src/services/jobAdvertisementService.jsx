@@ -1,9 +1,12 @@
+import { domainName } from "./baseService"
 import axios from "axios"
 
-const domainName = "http://localhost:8081"
+// const domainName = "http://localhost:8081"
 const reqMap = "/api/jobadvertisement"
-
+// const requestPath = BaseService.getDomainName() + reqMap
 const requestPath = domainName + reqMap
+
+
 
 export default class JobAdvertisementService {
 
